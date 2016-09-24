@@ -1,0 +1,26 @@
+@import "../../styles/constants";
+@import "../../styles/breakdown";
+
+
+.container {
+  width: 100%;
+  height: $toolbar-height;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @include mixin-mq(small) {
+    margin-bottom: 0;
+  }
+
+  .leftWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .rightWrapper {
+    padding-right: 1rem;
+  }
+}

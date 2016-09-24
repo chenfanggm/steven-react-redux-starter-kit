@@ -1,0 +1,66 @@
+/**
+* Application
+**/
+$app-min-width: 320px;
+$app-max-width: 960px;
+// z-index
+$z-index-navbar: 1;
+$z-index-message-modal: 1001;
+$z-index-login-modal: 1002;
+$z-index-register-modal: 1003;
+$z-index-image-modal: 1004;
+
+/**
+* Navbar
+**/
+$navbar-height: 6rem;
+
+/**
+* Toobar
+**/
+$toolbar-height: 4rem;
+
+/**
+* Page
+**/
+$page-max-width: 75rem;
+$page-min-height: 60rem;
+
+/**
+* Color
+**/
+// basic
+$basic-color-primary: #FFFFFF !default;
+$basic-color-secondary: #3b3f51 !default;
+
+// background
+$bg-color-primary: #FFFFFF !default;
+$bg-color-secondary: #333333 !default;
+$bg-color-third: #303030 !default;
+$bg-color-secondary-transparent: rgba(45, 45, 45, 0.9) !default;
+
+/**
+* Text
+**/
+$text-color-primary: #343434 !default;
+$text-color-secondary: #3B3B3B !default;
+$text-color-third: #666666 !default;
+$text-color-grey: #888888 !default;
+$text-color-light: #FEFEFE !default;
+
+/**
+* Link
+**/
+$link-color-primary: #2db7f5 !default;
+$link-color-secondary: #1A4A6E !default;
+$link-color-third: #283440 !default;
+$link-color-light: #87cefa !default;
+$link-color-green: #87d068 !default;
+$link-color-orange: #ffa07a !default;
+
+/**
+* Button
+**/
+// element
+$button-color-primary: white !default;
+$button-color-secondary: wheat !default;

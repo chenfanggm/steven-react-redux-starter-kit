@@ -1,0 +1,22 @@
+@import "../../styles/constants";
+
+
+.container {
+
+  section {
+    margin-bottom: 4rem;
+  }
+
+  .title {
+    width: 100%;
+    margin: 0;
+    font: 4rem/1.4 'Lato-Bold', sans-serif;
+    color: $text-color-primary;
+  }
+
+  .main {
+    margin-top: 2rem;
+    font: 2.2rem/1.5 'Crimson-Text', serif;
+    color: $text-color-secondary;
+  }
+}

@@ -1,0 +1,33 @@
+@import "../../styles/constants";
+@import "../../styles/breakdown";
+
+
+.container {
+  display: flex;
+  align-items: center;
+  font-size: 2.5rem;
+
+  .link {
+    margin: 0 0.7rem;
+    color: $text-color-light;
+  }
+
+  .link:hover {
+    color: $link-color-primary;
+  }
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .title {
+    font: 2rem/1.5 'Lato-Bold', sans-serif;
+  }
+
+  .wechatCode {
+    width: 30rem;
+  }
+}

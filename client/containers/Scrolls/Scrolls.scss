@@ -1,0 +1,39 @@
+@import "../../styles/constants";
+
+.container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: $page-max-width;
+  min-height: 8rem;
+  padding: 0 4rem 0 0.5rem;
+  margin: 4rem auto 0;
+  border-radius: 5px;
+  box-shadow: 0 0 1px 0 rgba(100, 100, 100, 0.75);
+  font: 1.8rem/1.5 'Audiowide', sans-serif;
+  background-color: whitesmoke;
+
+  &:before {
+    background: #fff url('../../static/img/svg/snorlax.svg') no-repeat 1rem 1.5rem;
+    background-size: 5rem 5rem;
+    position: absolute;
+    right: -1.5rem;
+    top: -4rem;
+    width: 7rem;
+    height: 7rem;
+    box-shadow: none;
+    border-radius: 70%;
+    content: '';
+  }
+
+  .content {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font: 1.6rem/1.3 'Audiowide', sans-serif;
+    color: $text-color-third;
+  }
+}

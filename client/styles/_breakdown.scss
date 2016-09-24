@@ -1,0 +1,24 @@
+$media: only screen;
+$feature: max-width;
+$break-medium: 768px;
+$break-small: 415px;
+$break-exsmall: 321px;
+
+
+@mixin mixin-mq($breakpoint) {
+  @if $breakpoint == medium {
+    @media #{$media} and ($feature: $break-medium) {
+      @content;
+    }
+  }
+  @else if $breakpoint == small {
+    @media #{$media} and ($feature: $break-small) {
+      @content;
+    }
+  }
+  @else if $breakpoint == exsmall {
+    @media #{$media} and ($feature: $break-exsmall) {
+      @content;
+    }
+  }
+}

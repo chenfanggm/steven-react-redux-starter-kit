@@ -1,0 +1,28 @@
+
+
+.container {
+
+  .modal {
+    width: 40rem;
+    max-width: 40rem;
+    margin: 1rem auto;
+
+    .form {
+      min-height: 7rem;
+
+      .usernameInput {
+        width: 100%;
+        height: 4rem;
+        margin: 2rem 0 2rem 0;
+        font: 1.7rem/1.4 'Lato-Bold', sans-serif;
+      }
+    }
+
+    .footer {
+      .submitButton {
+
+      }
+    }
+  }
+}
+

@@ -1,0 +1,68 @@
+@import "../../styles/breakdown";
+@import "../../styles/constants";
+
+.container {
+  position: relative;
+  width: 100%;
+  min-height: 100%;
+  padding: $navbar-height 0 12rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  @include mixin-mq(medium) {
+    padding-bottom: 10rem;
+  }
+
+  @include mixin-mq(small) {
+    padding-bottom: 9rem;
+  }
+
+  .page {
+    position: relative;
+    width: 90%;
+    max-width: $page-max-width;
+    min-height: $page-min-height;
+    margin: 0 auto;
+    padding-top: 3rem;
+
+    @include mixin-mq(medium) {
+      padding-top: 2rem;
+    }
+
+    @include mixin-mq(small) {
+      padding-top: 1rem;
+    }
+
+    .main {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .bottom {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 12rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    @include mixin-mq(medium) {
+      height: 10rem;
+    }
+
+    @include mixin-mq(small) {
+      height: 9rem;
+    }
+
+  }
+
+  .hiddenLayer {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+

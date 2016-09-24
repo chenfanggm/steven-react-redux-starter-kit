@@ -1,0 +1,18 @@
+@import "../../styles/constants";
+
+.container {
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  font: 1.7rem/1.5 "Open-Sans-Semibold", sans-serif;
+  color: $text-color-secondary;
+
+  .dropdownContainer {
+    position: relative;
+
+    .dropdownMenu {
+      width: 17rem;
+      margin-left: -10rem;
+    }
+  }
+}

@@ -1,0 +1,83 @@
+@import "font";
+@import "constants";
+@import "breakdown";
+
+:global {
+  @import "~normalize.css/normalize";
+
+  // Some best-practice CSS that"s useful for most apps
+  // Just remove them if they"re not what you want
+  html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 62.5%;
+
+    @include mixin-mq(small) {
+      font-size: 56%;
+    }
+  }
+
+  body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Open-Sans', sans-serif;
+    font-size: 1.6rem;
+    line-height: 2.56rem;
+    text-rendering: optimizeLegibility;
+    color: $text-color-primary;
+    background-color: $bg-color-primary;
+
+    &.noScroll {
+      overflow: hidden;
+    }
+  }
+
+  a {
+    text-decoration: none;
+    color: $link-color-primary;
+    cursor: pointer;
+  }
+
+  h3 {
+    margin: 2rem 0 1rem 0;
+    font-size: 3rem;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  blockquote {
+    position: relative;
+    margin: 1rem 0 3rem 0;
+    padding: 0 1rem;
+    border-left: 3px solid #cccccc;
+    font: 2rem/1.5 'Lato', sans-serif;
+    color: $text-color-third;
+  }
+
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
+  }
+
+  #root {
+    &.noScroll {
+      overflow: hidden;
+    }
+  }
+
+  /*::-webkit-scrollbar {
+    width: 1px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(176,229,252,0.5);
+    border-radius: 50%;
+    box-shadow: inset 0 0 1px rgba(45,183,245,0.5);
+  }*/
+}

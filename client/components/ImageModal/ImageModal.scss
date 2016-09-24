@@ -1,0 +1,21 @@
+
+
+.container {
+
+  .modalBody {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .title {
+      font: 2rem/1.5 'Lato-Bold', sans-serif;
+    }
+
+    .wechatCode {
+      width: 30rem;
+    }
+  }
+}

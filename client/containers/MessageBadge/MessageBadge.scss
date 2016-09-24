@@ -1,0 +1,32 @@
+@import "../../styles/constants";
+
+
+.container {
+
+  .badge {
+    z-index: 0;
+
+    .link {
+      display: flex;
+      align-items: center;
+      color: $link-color-green;
+
+      .text {
+        z-index: 1;
+        position: absolute;
+        left: 0.45rem;
+        top: 1.1rem;
+        font: 1rem/1.3 'Lato-Bold', sans-serif;
+      }
+
+      .icon {
+        z-index: 2;
+        font-size: 4rem;
+      }
+    }
+
+    .link:hover {
+      color: $link-color-primary;
+    }
+  }
+}

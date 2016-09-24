@@ -1,0 +1,34 @@
+@import "../../styles/constants";
+@import "../../styles/breakdown";
+
+
+.container {
+  height: 5rem;
+  display: flex;
+  align-items: center;
+
+  .text {
+    display: inline-block;
+    font: 3.2rem/1.5 "Audiowide", sans-serif, serif;
+    vertical-align: middle;
+    padding: 0.8rem;
+    color: $text-color-light;
+    text-decoration: none;
+
+    @include mixin-mq(small) {
+      font-size: 2.8rem;
+      padding: 0.3rem 0.3rem 0.3rem 0;
+    }
+
+    @include mixin-mq(exsmall) {
+      font-size: 2.5rem;
+      padding: 0.3rem;
+    }
+  }
+
+  .logo {
+    width: 4.2rem;
+    border-radius: 5px;
+  }
+}
+

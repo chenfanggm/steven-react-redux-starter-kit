@@ -1,0 +1,4 @@
+node_modules/**
+public/**
+*.spec.js
+client/index.html

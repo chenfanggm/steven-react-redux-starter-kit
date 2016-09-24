@@ -1,0 +1,52 @@
+@import "../../styles/constants";
+@import "../../styles/breakdown";
+
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 10rem;
+  padding: 0 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: $bg-color-secondary;
+  font: 2rem/1.5 'Lato-Bold', sans-serif;
+  color: $text-color-light;
+
+  @include mixin-mq(medium) {
+    height: 8rem;
+    padding: 0 2rem;
+  }
+
+  @include mixin-mq(small) {
+    height: 7rem;
+    padding: 0 1rem;
+    font-size: 1.8rem;
+  }
+
+  @include mixin-mq(exsmall) {
+    height: 6rem;
+    padding: 0 1rem;
+    font-size: 1.7rem;
+  }
+
+  .topLayer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .bottomLayer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .link {
+      margin: 0 0.7rem;
+    }
+  }
+}
