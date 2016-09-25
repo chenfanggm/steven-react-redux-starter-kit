@@ -1,6 +1,6 @@
 # Steven's MERN Starter Kit
-This starter kit provide a solid foundation of starting a new ###Nodejs MERN Stack### web application.
-It uses: ###Reactjs###, ###Redux###, ###Koajs###, ###Mongodb###, and ###Webpack###.
+This starter kit provide a solid foundation of starting a new **Nodejs MERN Stack** web application.
+It uses: **Reactjs**, **Redux**, **Koajs**, **Mongodb**, and **Webpack**.
 
 # Install
 * Clone this repo, and navigate to the directory
@@ -15,11 +15,11 @@ npm run dev
 
 # Start Coding
 * Front-End
-1. use ###/client/routes/index.js### as a start point
-2. check ###/client/routes/AboutView/index.js### as a page route 'http://localhost:3000/about'
+1. use **/client/routes/index.js** as a start point
+2. check **/client/routes/AboutView/index.js** as a page route 'http://localhost:3000/about'
 * Back-End
-1. use ###/server/routes/index.js### as a start point
-2. check ###/server/routes/PostController### as an API entry point
+1. use **/server/routes/index.js** as a start point
+2. check **/server/routes/PostController** as an API entry point
 
 # Reference:
 * http://koajs.com
