@@ -28,3 +28,10 @@ npm run dev
 * https://mongodb.github.io/node-mongodb-native/api-articles/nodekoarticle1.html
 * http://webpack.github.io/docs/what-is-webpack.html
 * https://github.com/davezuko/react-redux-starter-kit
+
+# License
+MIT
+
+# Author
+My name is [Chen Fang](https://chen-fang.com/), a humble Full-Stack Software Engineer.
+
