@@ -121,7 +121,7 @@ webpackConfig.module.loaders = [{
   loader: 'babel',
   query: {
     cacheDirectory: true,
-    plugins: ['transform-runtime', 'lodash', ['antd', { style: 'css' }], 'react-hot-loader/babel'],
+    plugins: ['transform-runtime', 'lodash', ["import", [{ "libraryName": "antd", "style": "css" }]], 'react-hot-loader/babel'],
     presets: ['es2015', 'react', 'stage-0'],
     env: {
       development: {

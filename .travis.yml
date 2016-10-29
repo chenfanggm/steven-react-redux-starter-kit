@@ -1,21 +1,67 @@
 sudo: false
 language: node_js
 node_js:
-  - "6"
+  - '6.1.0'
+env:
+  - CXX=g++-4.8
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
 
 cache:
-  directories:
-    - node_modules
+  - apt: true
+  - directories:
+    - $TRAVIS_BUILD_DIR/node_modules
+
+before_install:
+  - npm install -g npm && npm -v
 
 install:
   - npm install
 
-script:
-  - npm run lint
-  - npm run test
-  - NODE_ENV=development npm run deploy
-  - NODE_ENV=staging npm run deploy
-  - NODE_ENV=production npm run deploy
+#before_script:
 
-after_success:
-  - npm run codecov
+#after_success:
+
+#after_failure:
+
+script:
+  #- npm run lint
+  #- npm run test
+  - npm run deploy:prod
+
+before_deploy:
+  - mkdir ./deployment
+  - cp -R ./bin ./deployment/ && cp -R ./build ./deployment/ && cp -R ./config ./deployment/
+  - cp -R ./node_modules ./deployment/ && cp ./package.json ./deployment/ && cp ./.babelrc ./deployment/
+  - cp -R ./dist ./deployment/ && cp -R ./server ./deployment/
+  - pushd deployment && tar -zcf $HOME/steven-blog-dist-$TRAVIS_BRANCH.tar.gz . && popd
+  - pushd $HOME && sha256sum steven-blog-dist-$TRAVIS_BRANCH.tar.gz > steven-blog-dist-$TRAVIS_BRANCH.tar.gz.sha256 && popd
+
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api-key:
+    secure: '<generated token from github>'
+  file:
+    - $HOME/steven-blog-dist-$TRAVIS_BRANCH.tar.gz
+    - $HOME/steven-blog-dist-$TRAVIS_BRANCH.tar.gz.sha256
+  on:
+    node: '6.1.0'
+    tags: true
+
+#after_deploy:
+
+#after_script:
+
+notifications:
+  slack:
+    rooms:
+      - "<generated token from slark>"
+    template:
+      - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}"
+      - "Change view : %{compare_url}"
+      - "Build details : %{build_url}"
