@@ -1,8 +1,7 @@
-import config from '../config'
-import server from '../server/server'
-import _debug from 'debug'
+const config = require('../config')
+const server = require('../server/server')
+const debug = require('debug')('app:bin:server')
 
-const debug = _debug('app:bin:server')
 const port = config.server_port
 const host = config.server_host
 

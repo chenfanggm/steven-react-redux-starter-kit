@@ -2,12 +2,9 @@ import Koa from 'koa'
 import conditional from 'koa-conditional-get'
 import etag from 'koa-etag'
 import compress from 'koa-compress'
-import Router from 'koa-router'
-import jwt from 'koa-jwt'
 import proxy from 'koa-proxy'
 import bodyParser from 'koa-bodyparser'
 import serve from 'koa-static'
-import redis from 'koa-redis'
 import validator from 'koa-validate'
 import cors from 'kcors'
 import historyApiFallback from 'koa-connect-history-api-fallback'
@@ -18,7 +15,6 @@ import webpack from 'webpack'
 import webpackConfig from '../build/webpack.config'
 import webpackDevMiddleware from './middleware/webpack-dev'
 import webpackHMRMiddleware from './middleware/webpack-hmr'
-import cacheControlMiddleware from './middleware/cache-control'
 import httpRequestHandler from './middleware/http-request-handler'
 
 import _debug from 'debug'
@@ -115,4 +111,4 @@ if (config.env === 'development') {
   }))
 }
 
-export default app
+module.exports = app

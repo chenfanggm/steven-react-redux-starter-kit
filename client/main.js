@@ -1,39 +1,28 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import createBrowserHistory from 'history/lib/createBrowserHistory'
-import { Router, useRouterHistory } from 'react-router'
+import { browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
-import { AppContainer } from 'react-hot-loader'
+import AppContainer from './containers/AppContainer'
 import createStore from './redux/createStore'
 
-// Browser History Setup
-const browserHistory = useRouterHistory(createBrowserHistory)({
-  basename: __BASENAME__
-})
-
-// Store and History Instantiation
-// Create redux store and sync with react-router-redux. We have installed the
-// react-router-redux reducer under the routerKey "router" in redux/reducers.js,
-// so we need to provide a custom `selectLocationState` to inform react-router-redux
-const store = createStore(window.__INITIAL_STATE__, browserHistory)
+// ========================================================
+// Store Instantiation
+// ========================================================
+const initialState = window.___INITIAL_STATE__
+const store = createStore(initialState, browserHistory)
 const history = syncHistoryWithStore(browserHistory, store, {
   selectLocationState: (state) => state.router
 })
 
+// ========================================================
 // Render Setup
+// ========================================================
 const MOUNT_NODE = document.getElementById('root')
 
 let render = () => {
   const routes = require('./routes/index').default(store)
-  const Root = require('./Root').default
   ReactDOM.render(
-    <AppContainer>
-      <Root
-        store={store}
-        history={history}
-        routes={routes}
-      />
-    </AppContainer>,
+    <AppContainer store={store} history={history} routes={routes} />,
     MOUNT_NODE
   )
 }
@@ -45,6 +34,7 @@ if (__DEV__) {
     const renderApp = render
     const renderError = (error) => {
       const RedBox = require('redbox-react').default
+
       ReactDOM.render(<RedBox error={error} />, MOUNT_NODE)
     }
 
@@ -53,19 +43,22 @@ if (__DEV__) {
       try {
         renderApp()
       } catch (error) {
+        console.error(error)
         renderError(error)
       }
     }
 
     // Setup hot module replacement
-    module.hot.accept('./routes/index', () => {
-      setTimeout(() => {
+    module.hot.accept('./routes/index', () =>
+      setImmediate(() => {
         ReactDOM.unmountComponentAtNode(MOUNT_NODE)
         render()
       })
-    })
+    )
   }
 }
 
-// Render!
+// ========================================================
+// Go!
+// ========================================================
 render()

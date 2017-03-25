@@ -40,7 +40,7 @@ class UsernameModal extends React.Component {
 
   render() {
     const { isShowUsernameModal, isLoading } = this.props
-    const { getFieldProps } = this.props.form;
+    const { getFieldDecorator } = this.props.form;
 
     return (
       <Modal
@@ -64,7 +64,7 @@ class UsernameModal extends React.Component {
         ]}
       >
         <Form horizontal className={classes.form}>
-          <Input {...getFieldProps('username', {})}
+          <Input {...getFieldDecorator('username', {})}
             type='text'
             autoComplete='off'
             placeholder='Enter your username...'

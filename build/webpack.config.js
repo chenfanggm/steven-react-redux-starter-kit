@@ -1,14 +1,15 @@
-import webpack from 'webpack'
-import cssnano from 'cssnano'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
-import ScriptExtHtmlWebpackPlugin from 'script-ext-html-webpack-plugin'
-import ExtractTextPlugin from 'extract-text-webpack-plugin'
-import config from '../config'
-import _debug from 'debug'
+const argv = require('yargs').argv
+const webpack = require('webpack')
+const cssnano = require('cssnano')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const config = require('../config')
+const debug = require('debug')('app:config:webpack')
 
-const debug = _debug('app:webpack:config')
 const paths = config.utils_paths
-const {__DEV__, __PROD__, __TEST__} = config.globals
+const __DEV__ = config.globals.__DEV__
+const __PROD__ = config.globals.__PROD__
+const __TEST__ = config.globals.__TEST__
 
 debug('Create configuration.')
 const webpackConfig = {
@@ -26,24 +27,15 @@ const webpackConfig = {
 // ------------------------------------
 const APP_ENTRY_PATHS = [
   'babel-polyfill',
-  'history',
-  'react',
-  'react-redux',
-  'react-router',
-  'react-router-redux',
-  'redux',
-  'font-awesome-sass-loader',
   paths.client('main.js')
 ]
 
 webpackConfig.entry = {
-  vendor: config.compiler_vendor,
   app: __DEV__
-    ? [
-    'react-hot-loader/patch',
-    `webpack-hot-middleware/client?path=${config.compiler_public_path}__webpack_hmr`
-    ].concat(APP_ENTRY_PATHS)
-    : APP_ENTRY_PATHS
+    ? APP_ENTRY_PATHS
+      .concat(`webpack-hot-middleware/client?path=${config.compiler_public_path}__webpack_hmr`)
+    : APP_ENTRY_PATHS,
+  vendor: config.compiler_vendors
 }
 
 // ------------------------------------
@@ -54,6 +46,14 @@ webpackConfig.output = {
   path: paths.dist(),
   publicPath: config.compiler_public_path
 }
+
+// ------------------------------------
+// Externals
+// ------------------------------------
+webpackConfig.externals = {}
+webpackConfig.externals['react/lib/ExecutionEnvironment'] = true
+webpackConfig.externals['react/lib/ReactContext'] = true
+webpackConfig.externals['react/addons'] = true
 
 // ------------------------------------
 // Plugins
@@ -70,9 +70,6 @@ webpackConfig.plugins = [
       collapseWhitespace: false
     }
   }),
-  new ScriptExtHtmlWebpackPlugin({
-    defaultAttribute: 'async'
-  }),
   new webpack.ProvidePlugin({
     'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch',
     $: 'jquery',
@@ -80,6 +77,22 @@ webpackConfig.plugins = [
     'window.jQuery': 'jquery'
   })
 ]
+
+// Ensure that the compiler exits on errors during testing so that
+// they do not get skipped and misreported.
+if (__TEST__ && !argv.watch) {
+  webpackConfig.plugins.push(function () {
+    this.plugin('done', function (stats) {
+      if (stats.compilation.errors.length) {
+        // Pretend no assets were generated. This prevents the tests
+        // from running making it clear that there were warnings.
+        throw new Error(
+          stats.compilation.errors.map(err => err.message || err)
+        )
+      }
+    })
+  })
+}
 
 if (__DEV__) {
   debug('Enable plugins for live development (HMR, NoErrors).')
@@ -98,7 +111,8 @@ if (__DEV__) {
         dead_code: true,
         warnings: false
       }
-    })
+    }),
+    new webpack.optimize.AggressiveMergingPlugin()
   )
 }
 
@@ -106,7 +120,7 @@ if (__DEV__) {
 if (!__TEST__) {
   webpackConfig.plugins.push(
     new webpack.optimize.CommonsChunkPlugin({
-      names: ['app']
+      names: ['vendor']
     })
   )
 }
@@ -122,12 +136,7 @@ webpackConfig.module.loaders = [{
   query: {
     cacheDirectory: true,
     plugins: ['transform-runtime', 'lodash', ["import", [{ "libraryName": "antd", "style": "css" }]], 'react-hot-loader/babel'],
-    presets: ['es2015', 'react', 'stage-0'],
-    env: {
-      development: {
-        plugins: ['react-hot-loader/babel']
-      }
-    }
+    presets: ['es2015', 'react', 'stage-0']
   }
 },
   {
@@ -209,9 +218,6 @@ webpackConfig.module.loaders.push({
   ]
 })
 
-// ------------------------------------
-// Style Configuration
-// ------------------------------------
 webpackConfig.sassLoader = {
   includePaths: paths.client('styles')
 }
@@ -248,9 +254,7 @@ webpackConfig.module.loaders.push(
       'file?prefix=images/&name=[path][name].[ext]&limit=10000',
       'image-webpack?{progressive:true, optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}}'
     ]
-  }/*,
-  { test: /\.svg(\?.*)?$/,   loader: 'file?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=image/svg+xml' },
-  { test: /\.(png|jpg)$/,    loader: 'url?limit=8192' }*/
+  }
 )
 /* eslint-enable */
 
@@ -266,9 +270,10 @@ if (!__DEV__) {
   webpackConfig.module.loaders.filter((loader) =>
     loader.loaders && loader.loaders.find((name) => /css/.test(name.split('?')[0]))
   ).forEach((loader) => {
-    const [first, ...rest] = loader.loaders
+    const first = loader.loaders[0]
+    const rest = loader.loaders.slice(1)
     loader.loader = ExtractTextPlugin.extract(first, rest.join('!'))
-    Reflect.deleteProperty(loader, 'loaders')
+    delete loader.loaders
   })
 
   webpackConfig.plugins.push(
@@ -278,4 +283,4 @@ if (!__DEV__) {
   )
 }
 
-export default webpackConfig
+module.exports = webpackConfig

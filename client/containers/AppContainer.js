@@ -1,8 +1,7 @@
-import React, { PropTypes } from 'react'
-import { Router } from 'react-router'
+import React, { Component, PropTypes } from 'react'
+import { browserHistory, Router } from 'react-router'
 import { Provider } from 'react-redux'
 import ReactGA from 'react-ga'
-
 
 ReactGA.initialize('UA-60711230-1')
 
@@ -11,24 +10,25 @@ const logPageView = () => {
   ReactGA.pageview(window.location.pathname);
 }
 
-class Root extends React.Component {
+class AppContainer extends Component {
   static propTypes = {
-    history: PropTypes.object.isRequired,
     routes: PropTypes.object.isRequired,
-    routerKey: PropTypes.number,
     store: PropTypes.object.isRequired
   }
 
+  shouldComponentUpdate () {
+    return false
+  }
 
   render () {
-    const { history, routes, routerKey, store } = this.props
+    const { routes, store } = this.props
 
     return (
       <Provider store={store}>
-        <Router onUpdate={logPageView} history={history} children={routes} key={routerKey} />
+        <Router onUpdate={logPageView} history={browserHistory} children={routes} />
       </Provider>
     )
   }
 }
 
-export default Root
+export default AppContainer

@@ -45,7 +45,7 @@ class LoginModal extends React.Component {
   render() {
     const { isShowLoginModal, isLoading } = this.props
     const { switchLoginRegisterForm } = this.props
-    const { getFieldProps } = this.props.form;
+    const { getFieldDecorator } = this.props.form;
 
     const formItemLayout = {
       labelCol: { span: 6 },
@@ -87,7 +87,7 @@ class LoginModal extends React.Component {
                 {...formItemLayout}
                 label='EMAIL'
               >
-                <Input {...getFieldProps('email', {})} type='email' autoComplete='on' />
+                <Input {...getFieldDecorator('email', {})} type='email' autoComplete='on' />
               </Form.Item>
             </Col>
           </Row>
@@ -97,7 +97,7 @@ class LoginModal extends React.Component {
                 {...formItemLayout}
                 label='PASSWORD'
               >
-                <Input {...getFieldProps('password', {})}
+                <Input {...getFieldDecorator('password', {})}
                   type='password'
                   autoComplete='on'
                   onPressEnter={this.submitHandler}
