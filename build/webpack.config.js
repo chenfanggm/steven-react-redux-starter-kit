@@ -248,13 +248,7 @@ webpackConfig.module.loaders.push(
   { test: /\.otf(\?.*)?$/,   loader: 'file?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=font/opentype' },
   { test: /\.ttf(\?.*)?$/,   loader: 'file?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/octet-stream' },
   { test: /\.eot(\?.*)?$/,   loader: 'file?prefix=fonts/&name=[path][name].[ext]' },
-  {
-    test: /\.(jpe?g|png|gif|svg)(\?.*)?$/i,
-    loaders: [
-      'file?prefix=images/&name=[path][name].[ext]&limit=10000',
-      'image-webpack?{progressive:true, optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}}'
-    ]
-  }
+  { test: /\.(jpe?g|png|gif|svg)(\?.*)?$/i, loader: 'file?prefix=images/&name=[path][name].[ext]&limit=10000' }
 )
 /* eslint-enable */
 

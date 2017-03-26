@@ -19,7 +19,6 @@ const whatAboutTheSite =
   learn new things from your friendly and honest comments and emails. Thank you!`
 
 class AboutView extends React.Component {
-
   render() {
     return (
       <article className={classes.container}>
