@@ -17,10 +17,11 @@ const config = {
   // ----------------------------------
   // Project Structure
   // ----------------------------------
-  path_base  : path.resolve(__dirname, '..'),
-  dir_client : 'client',
+  dir_base  : path.resolve(__dirname, '..'),
+  dir_client : 'src',
   dir_dist   : 'dist',
   dir_server : 'server',
+  dir_static : 'src/static',
   dir_test   : 'tests',
 
   // ----------------------------------
@@ -134,7 +135,7 @@ config.compiler_vendors = config.compiler_vendors
 // Utilities
 // ------------------------------------
 function base () {
-  const args = [config.path_base].concat([].slice.call(arguments))
+  const args = [config.dir_base].concat([].slice.call(arguments))
   return path.resolve.apply(path, args)
 }
 

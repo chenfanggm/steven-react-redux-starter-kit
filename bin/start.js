@@ -1,5 +1,7 @@
+'use strict'
+
 const config = require('../config')
-const server = require('../server/server')
+import server from '../server'
 const debug = require('debug')('app:bin:server')
 
 const port = config.server_port
