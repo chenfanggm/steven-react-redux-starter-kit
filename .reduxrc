@@ -1,5 +1,5 @@
 {
-  "sourceBase":"client",
+  "sourceBase":"src",
   "testBase":"tests",
   "smartPath":"containers",
   "dumbPath":"components",

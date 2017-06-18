@@ -18,10 +18,10 @@ const config = {
   // Project Structure
   // ----------------------------------
   dir_base  : path.resolve(__dirname, '..'),
-  dir_client : 'src',
+  dir_client : 'client',
   dir_dist   : 'dist',
   dir_server : 'server',
-  dir_static : 'src/static',
+  dir_static : 'client/static',
   dir_test   : 'tests',
 
   // ----------------------------------
@@ -61,7 +61,7 @@ const config = {
   // Compiler Configuration
   // ----------------------------------
   compiler_css_modules     : true,
-  compiler_devtool         : 'source-map',
+  compiler_source_map      : true,
   compiler_hash_type       : 'hash',
   compiler_fail_on_warning : false,
   compiler_quiet           : false,
@@ -110,9 +110,7 @@ config.globals = {
   'NODE_ENV'     : config.env,
   '__DEV__'      : config.env === 'development',
   '__PROD__'     : config.env === 'production',
-  '__TEST__'     : config.env === 'test',
-  '__COVERAGE__' : !argv.watch && config.env === 'test',
-  '__BASENAME__' : JSON.stringify(process.env.BASENAME || '')
+  '__TEST__'     : config.env === 'test'
 }
 
 // ------------------------------------
@@ -134,7 +132,7 @@ config.compiler_vendors = config.compiler_vendors
 // ------------------------------------
 // Utilities
 // ------------------------------------
-function base () {
+function base() {
   const args = [config.dir_base].concat([].slice.call(arguments))
   return path.resolve.apply(path, args)
 }

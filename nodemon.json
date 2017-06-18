@@ -1,4 +1,4 @@
 {
   "verbose": false,
-  "ignore": ["public", "coverage", "tests", "client"]
+  "ignore": ["client", "coverage", "tests"]
 }

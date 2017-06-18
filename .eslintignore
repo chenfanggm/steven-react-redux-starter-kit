@@ -1,4 +1,4 @@
 node_modules/**
-public/**
+src/static/**
+src/index.html
 *.spec.js
-client/index.html
