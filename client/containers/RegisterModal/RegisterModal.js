@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import classes from './RegisterModal.scss'
 import { isValidEmail } from '../../utils/common'
-import Constants from '../../../config/constants'
+import Constants from '../../utils/constants'
 import { Modal, Form, FormItem, Input, Button, Col, Row } from 'antd';
 import { actions as authActions } from '../../redux/modules/UserReducer'
 import { actions as globalActions } from '../../redux/modules/GlobalReducer'

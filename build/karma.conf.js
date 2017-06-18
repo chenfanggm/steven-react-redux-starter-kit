@@ -8,7 +8,7 @@ const karmaConfig = {
   basePath : '../', // project root in relation to bin/karma.js
   files    : [
     {
-      pattern  : `./${project.dir_test}/test-bundler.js`,
+      pattern  : `./${project.testDir}/test-bundler.js`,
       watched  : false,
       served   : true,
       included : true
@@ -18,7 +18,7 @@ const karmaConfig = {
   frameworks    : ['mocha'],
   reporters     : ['mocha'],
   preprocessors : {
-    [`${project.dir_test}/test-bundler.js`] : ['webpack']
+    [`${project.testDir}/test-bundler.js`] : ['webpack']
   },
   browsers : ['PhantomJS'],
   webpack  : {
@@ -53,15 +53,15 @@ const karmaConfig = {
     noInfo : true
   },
   coverageReporter : {
-    reporters : project.coverage_reporters
+    reporters : project.coverageReporters
   }
 }
 
-if (project.globals.__COVERAGE__) {
+if (project.compilerGlobals.__COVERAGE__) {
   karmaConfig.reporters.push('coverage')
   karmaConfig.webpack.module.preLoaders = [{
     test    : /\.(js|jsx)$/,
-    include : new RegExp(project.dir_client),
+    include : new RegExp(project.clientDir),
     exclude : /node_modules/,
     loader  : 'babel',
     query   : Object.assign({}, project.compiler_babel, {

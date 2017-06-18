@@ -4,7 +4,7 @@ import { message } from 'antd'
 import { errorFilter } from '../../utils/common'
 import { actions as globalActions } from './GlobalReducer'
 import { actions as messageActions } from './MessageReducer'
-import Constants from '../../../config/constants'
+import Constants from '../../utils/constants'
 import API from '../../utils/APIConstants'
 
 

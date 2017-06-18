@@ -3,44 +3,46 @@ const argv = require('yargs').argv
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const config = require('../config')
 const debug = require('debug')('app:config:webpack')
+const config = require('../config')
 
-const paths = config.utils_paths
-const __DEV__ = config.globals.__DEV__
-const __PROD__ = config.globals.__PROD__
-const __TEST__ = config.globals.__TEST__
+const paths = config.pathUtil
+const __DEV__ = config.compilerGlobals.__DEV__
+const __PROD__ = config.compilerGlobals.__PROD__
+const __TEST__ = config.compilerGlobals.__TEST__
 
-debug('Init configuration.')
+debug('Init webpack config.')
 const webpackConfig = {
   entry: {
-    normalize: [paths.client('normalize')],
     app: [
       'babel-polyfill',
       paths.client('main'),
-      __DEV__ ? `webpack-hot-middleware/client.js?path=${config.compiler_public_path}__webpack_hmr` : ''
+      __DEV__ ? `webpack-hot-middleware/client.js?path=${config.compilerPublicPath}__webpack_hmr` : ''
     ],
-    vendor: config.compiler_vendors
+    vendor: config.compilerVendors,
+    normalize: [paths.client('normalize')]
   },
-  devtool: config.compiler_source_map ? 'source-map' : false,
   output: {
     path: paths.dist(),
-    filename: __DEV__ ? `[name].js` : `[name].[${config.compiler_hash_type}].js`,
-    publicPath: config.compiler_public_path
+    filename: __DEV__ ? `[name].bundle.js` : `[name].[${config.compilerHashType}].bundle.js`,
+    publicPath: config.compilerPublicPath
   },
   resolve: {
     modules: [
       paths.client(),
       'node_modules'
     ],
-    extensions: ['*', '.js', '.jsx', '.json']
+    extensions: ['*', '.js', '.jsx', '.json'],
+    alias: {}
   },
+  devtool: config.compilerSourceMap,
   externals: {},
   module: {
+    noParse: /jquery|lodash/,
     rules: []
   },
   plugins: [
-    new webpack.DefinePlugin(config.globals),
+    new webpack.DefinePlugin(config.compilerGlobals),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
@@ -50,7 +52,7 @@ const webpackConfig = {
 }
 
 // ------------------------------------
-// Loaders
+// Module Rules
 // ------------------------------------
 // JavaScript
 webpackConfig.module.rules.push({
@@ -58,7 +60,7 @@ webpackConfig.module.rules.push({
   exclude: /node_modules/,
   use: [{
     loader: 'babel-loader',
-    query: {
+    options: {
       cacheDirectory: true,
       plugins: [
         'lodash',
@@ -116,7 +118,7 @@ webpackConfig.module.rules.push(
 // ------------------------------------
 // If config has CSS modules enabled, treat this project's styles as CSS modules.
 const PATHS_TO_TREAT_AS_CSS_MODULES = []
-if (config.compiler_css_modules) {
+if (config.compilerCssModules) {
   PATHS_TO_TREAT_AS_CSS_MODULES.push(
     paths.client().replace(/[\^\$\.\*\+\-\?\=\!\:\|\\\/\(\)\[\]\{\}\,]/g, '\\$&') // eslint-disable-line
   )
@@ -144,7 +146,7 @@ if (isUsingCSSModules) {
             modules: true,
             importLoaders: 1,
             localIdentName: '[path][name]__[local]--[hash:base64:5]',
-            sourceMap: config.compiler_source_map,
+            sourceMap: config.compilerSourceMap,
             minimize: false && {
               autoprefixer: {
                 add: true,
@@ -158,14 +160,14 @@ if (isUsingCSSModules) {
               mergeIdents: false,
               reduceIdents: false,
               safe: true,
-              sourcemap: config.compiler_source_map,
+              sourcemap: config.compilerSourceMap,
             },
           },
         },
         {
           loader: 'postcss-loader',
           options: {
-            sourceMap: config.compiler_source_map,
+            sourceMap: config.compilerSourceMap,
             ident: 'postcss',
             plugins () {
               return [
@@ -192,7 +194,7 @@ if (isUsingCSSModules) {
         {
           loader: 'sass-loader',
           options: {
-            sourceMap: config.compiler_source_map,
+            sourceMap: config.compilerSourceMap,
             includePaths: [
               paths.client('styles'),
             ],
@@ -214,7 +216,7 @@ if (isUsingCSSModules) {
             modules: true,
             importLoaders: 1,
             localIdentName: '[path][name]__[local]--[hash:base64:5]',
-            sourceMap: config.compiler_source_map,
+            sourceMap: config.compilerSourceMap,
             minimize: false && {
               autoprefixer: {
                 add: true,
@@ -228,14 +230,14 @@ if (isUsingCSSModules) {
               mergeIdents: false,
               reduceIdents: false,
               safe: true,
-              sourcemap: config.compiler_source_map,
+              sourcemap: config.compilerSourceMap,
             },
           },
         },
         {
           loader: 'postcss-loader',
           options: {
-            sourceMap: config.compiler_source_map,
+            sourceMap: config.compilerSourceMap,
             ident: 'postcss',  // <= this line
             plugins () {
               return [

@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Badge } from 'antd'
-import Constants from '../../../config/constants'
+import Constants from '../../utils/constants'
 import classes from './MessageBadge.scss'
 import { actions as messageActions } from '../../redux/modules/MessageReducer'
 

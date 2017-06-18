@@ -31,7 +31,7 @@ if (config.env === 'development') {
   debug('Enabling webpack development and HMR middleware')
   app.use(require('webpack-dev-middleware')(compiler, {
     publicPath  : webpackConfig.output.publicPath,
-    contentBase : path.resolve(config.dir_base, config.dir_client),
+    contentBase : path.resolve(config.baseDir, config.clientDir),
     hot         : true,
     quiet       : false,
     noInfo      : false,
@@ -42,7 +42,7 @@ if (config.env === 'development') {
     path: '/__webpack_hmr'
   }))
 
-  app.use(express.static(path.resolve(config.dir_base, config.dir_static)))
+  app.use(express.static(path.resolve(config.baseDir, config.staticDir)))
 
   // fallback all routes to index.html
   app.use('*', function (req, res, next) {
@@ -59,7 +59,7 @@ if (config.env === 'development') {
 
   debug('Server is running on DEVELOPMENT mode.')
 } else {
-  app.use(express.static(path.resolve(config.dir_base, config.dir_dist), {
+  app.use(express.static(path.resolve(config.baseDir, config.distDir), {
     maxage: config.cache_control.max_age
   }))
   debug('Server is running on PRODUCTION mode.')
@@ -80,4 +80,4 @@ app.use(function (err, req, res, next) {
 // error handler
 app.use(errorHandler())
 
-export default app
+module.exports = app

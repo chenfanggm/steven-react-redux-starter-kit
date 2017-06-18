@@ -12,7 +12,7 @@
     "promise"
   ],
   "env": {
-    "browser": true,     // browser global variables
+    "browser": true,      // browser global variables
     "node": false,        // Node.js global variables and Node.js-specific rules
     "amd": false,         // defines require() and define() as global variables as per the amd spec
     "mocha": false,       // adds all of the Mocha testing global variables
@@ -20,14 +20,13 @@
     "phantomjs": false,   // phantomjs global variables
     "jquery": false,      // jquery global variables
     "prototypejs": false, // prototypejs global variables
-    "shelljs": false     // shelljs global variables
+    "shelljs": false      // shelljs global variables
   },
-  "globals": {
-    "__DEV__"      : false,
-    "__PROD__"     : false,
-    "__DEBUG__"    : false,
-    "__COVERAGE__" : false,
-    "__BASENAME__" : false
+  "compilerGlobals": {
+    "__DEV__": false,
+    "__PROD__": false,
+    "__TEST__": false,
+    "process.env": false
   },
   "ecmaFeatures": {
     "arrowFunctions": true,                    // enable arrow functions
@@ -111,9 +110,9 @@
     "valid-typeof": 0,             // Ensure that the results of typeof are compared against a valid string
     "no-unexpected-multiline": 0,  // Avoid code that looks like two expressions but is actually one (off by default)
 
-
-    ////////// Best Practices //////////
-
+    // ------------------------------------
+    // Best Practices
+    // ------------------------------------
     "accessor-pairs": 0,        // enforces getter/setter pairs in objects (off by default)
     "block-scoped-var": 0,      // treat var statements as if they were block scoped (off by default)
     "complexity": 0,            // specify the maximum cyclomatic complexity allowed in a program (off by default)
@@ -166,8 +165,7 @@
     "wrap-iife": 0,             // require immediate function invocation to be wrapped in parentheses (off by default)
     "yoda": 0,                  // require or disallow Yoda conditions
 
-    ////////// Variables //////////
-
+    // Variables
     "no-catch-shadow": 0,             // disallow the catch clause parameter name being the same as a variable in the outer scope (off by default in the node environment)
     "no-delete-var": 0,               // disallow deletion of variables
     "no-label-var": 0,                // disallow labels that share a name with a variable
@@ -180,8 +178,7 @@
     "no-use-before-define": 0,        // disallow use of variables before they are defined
 
 
-    ////////// Node.js //////////
-
+    // Node.js
     "handle-callback-err": 0,   // enforces error handling in callbacks (off by default) (on by default in the node environment)
     "no-mixed-requires": 0,     // disallow mixing regular variable and require declarations (off by default) (on by default in the node environment)
     "no-new-require": 0,        // disallow use of new operator with the require function (off by default) (on by default in the node environment)
@@ -191,8 +188,7 @@
     "no-sync": 0,               // disallow use of synchronous methods (off by default)
 
 
-    ////////// Stylistic Issues //////////
-
+    // Stylistic Issues
     "array-bracket-spacing": 0,       // enforce spacing inside array brackets (off by default)
     "brace-style": 0,                 // enforce one true brace style (off by default)
     "camelcase": 0,                   // require camel case names
@@ -240,8 +236,7 @@
     "wrap-regex": 0,                  // require regex literals to be wrapped in parentheses (off by default)
 
 
-    ////////// ECMAScript 6 //////////
-
+    // ECMAScript 6
     "constructor-super": 0,      // verify super() callings in constructors (off by default)
     "no-this-before-super": 0,   // disallow to use this/super before super() calling in constructors (off by default)
     "no-var": 0,                 // require let or const instead of var (off by default)
@@ -249,8 +244,7 @@
     "prefer-const": 0,           // suggest using of const declaration for variables that are never modified after declared (off by default)
 
 
-    ////////// Legacy //////////
-
+    // Legacy
     "max-depth": 0,       // specify the maximum depth that blocks can be nested (off by default)
     "max-params": 0,      // limits the number of parameters that can be used in the function declaration. (off by default)
     "max-statements": 0,  // specify the maximum number of statement allowed in a function (off by default)

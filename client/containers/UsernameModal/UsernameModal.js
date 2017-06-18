@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Modal, Form, FormItem, Input, Button, Col, Row } from 'antd';
-import Constants from '../../../config/constants'
+import Constants from '../../utils/constants'
 import classes from './UsernameModal.scss'
 import { actions as authActions } from '../../redux/modules/UserReducer'
 import { actions as globalActions } from '../../redux/modules/GlobalReducer'

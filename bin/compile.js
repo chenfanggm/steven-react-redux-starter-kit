@@ -1,27 +1,22 @@
 const fs = require('fs-extra')
 const webpack = require('webpack')
 const webpackConfig = require('../build/webpack.config')
-const config = require('../config')
 const debug = require('debug')('app:bin:compile')
+const config = require('../config')
 
-
-const paths = config.utils_paths
+const paths = config.pathUtil
 
 // Wrapper around webpack to promisify its compiler and supply friendly logging
 const webpackCompiler = (webpackConfig) => {
   return new Promise((resolve, reject) => {
     const compiler = webpack(webpackConfig)
-
     compiler.run((err, stats) => {
       if (err) {
-        debug('Webpack compiler encountered a fatal error.', err)
+        debug('[Error] Webpack compiler encountered a fatal error.', err)
         return reject(err)
       }
 
       const jsonStats = stats.toJson()
-      debug('Webpack compile completed.')
-      debug(stats.toString(config.compiler_stats))
-
       if (jsonStats.errors.length > 0) {
         debug('Webpack compiler encountered errors.')
         debug(jsonStats.errors.join('\n'))
@@ -29,9 +24,11 @@ const webpackCompiler = (webpackConfig) => {
       } else if (jsonStats.warnings.length > 0) {
         debug('Webpack compiler encountered warnings.')
         debug(jsonStats.warnings.join('\n'))
-      } else {
-        debug('No errors or warnings encountered.')
+        if (config.compilerFailOnWarning) {
+          throw new Error('Config set to fail on warning, exiting with compile warning.')
+        }
       }
+
       resolve(jsonStats)
     })
   })
@@ -39,21 +36,24 @@ const webpackCompiler = (webpackConfig) => {
 
 
 const compile = () => {
-  debug('Starting compiler.')
+  debug('Starting compiler...')
+  debug('Target application environment: ' + config.env)
   return Promise.resolve()
     .then(() => webpackCompiler(webpackConfig))
     .then(stats => {
-      if (stats.warnings.length && config.compiler_fail_on_warning) {
-        throw new Error('Config set to fail on warning, exiting with status code "1".')
-      }
-      debug('Copying static assets to dist folder.')
+      debug('Copying static assets from ./client/static to dist folder.')
       fs.copySync(paths.client('static'), paths.dist())
+      return stats
     })
-    .then(() => {
-      debug('Compilation completed successfully.')
+    .then((stats) => {
+      debug(stats.toString({
+        chunks : false,
+        colors : true
+      }))
+      debug('Webpack compile completed successfully.')
     })
     .catch((err) => {
-      debug('Compiler encountered an error.', err)
+      debug('[Error] Compiler encountered an error.', err)
       process.exit(1)
     })
 }
