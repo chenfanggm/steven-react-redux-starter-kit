@@ -9,13 +9,7 @@ const API = {
   USER_REGISTER: PREFIX + '/user/register',
   USER_LOGOUT: PREFIX + '/user/logout',
   USER_UPDATE_USERNAME: PREFIX + '/user/username',
-  USER_UPDATE_LAST_READ_MESSAGE_AT: PREFIX + '/user/lastReadMessageAt',
-
-  // POST
-  POST: PREFIX + '/post',
-  POST_URL: PREFIX + '/post/url',
-  // MESSAGE
-  MESSAGE: PREFIX + '/message'
+  USER_UPDATE_LAST_READ_MESSAGE_AT: PREFIX + '/user/lastReadMessageAt'
 }
 
 export default API

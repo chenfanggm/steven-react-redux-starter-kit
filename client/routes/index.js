@@ -2,7 +2,7 @@
 import OneColumnLayout from '../containers/OneColumnLayout'
 import AboutView from './AboutView'
 
-export const createRoutes = (store) => ({
+const createRoutes = (store) => ({
   path: '/',
   name: 'Home',
   component: OneColumnLayout,

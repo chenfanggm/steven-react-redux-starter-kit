@@ -20,7 +20,7 @@ const history = syncHistoryWithStore(browserHistory, store, {
 const MOUNT_NODE = document.getElementById('root')
 
 let render = () => {
-  const routes = require('./routes/index').default(store)
+  const routes = require('./routes').default(store)
   ReactDOM.render(
     <AppContainer store={store} history={history} routes={routes} />,
     MOUNT_NODE

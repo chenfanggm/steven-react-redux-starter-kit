@@ -1,6 +1,4 @@
-import React, { PropTypes } from 'react'
-import { connect } from 'react-redux'
-import { Link } from 'react-router'
+import React from 'react'
 import classes from './Footer.scss'
 
 const Footer = () => (
