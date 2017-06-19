@@ -7,6 +7,7 @@
     z-index: 0;
 
     .link {
+      position: relative;
       display: flex;
       align-items: center;
       color: $link-color-green;

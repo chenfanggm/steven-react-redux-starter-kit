@@ -43,7 +43,7 @@ const config = {
   compilerPublicPath: '/',
   compilerHashType: 'hash',
   compilerCssModules: true,
-  compilerSourceMap:  false,
+  compilerSourceMap:  'source-map',
   compilerFailOnWarning: false,
   compilerQuiet: false,
   compilerVendors: [
@@ -55,15 +55,6 @@ const config = {
     'font-awesome-sass-loader',
     'jquery'
   ],
-  // NOTE: application global variables must also be added to .eslintrc
-  compilerGlobals: {
-    'process.env'  : {
-      'NODE_ENV' : JSON.stringify(process.env.NODE_ENV || 'development')
-    },
-    '__DEV__'      : process.env.NODE_ENV === 'development',
-    '__PROD__'     : process.env.NODE_ENV === 'production',
-    '__TEST__'     : process.env.NODE_ENV === 'test'
-  },
 
   // ----------------------------------
   // Test Configuration
@@ -72,6 +63,16 @@ const config = {
     { type : 'text-summary' },
     { type : 'html', dir : 'coverage' }
   ]
+}
+
+// NOTE: application global variables must also be added to .eslintrc
+config.compilerGlobals = {
+  'process.env': {
+    NODE_ENV: JSON.stringify(config.env)
+  },
+  __DEV__: config.env === 'development',
+  __PROD__: config.env === 'production',
+  __TEST__: config.env === 'test'
 }
 
 // ------------------------------------

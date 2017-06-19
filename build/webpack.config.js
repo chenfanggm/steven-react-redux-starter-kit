@@ -12,13 +12,13 @@ const __PROD__ = config.compilerGlobals.__PROD__
 const __TEST__ = config.compilerGlobals.__TEST__
 
 debug('Init webpack config.')
+const mainEntry = [paths.client('main')]
+if (__DEV__) {
+  mainEntry.push(`webpack-hot-middleware/client.js?path=${config.compilerPublicPath}__webpack_hmr`)
+}
 const webpackConfig = {
   entry: {
-    app: [
-      'babel-polyfill',
-      paths.client('main'),
-      __DEV__ ? `webpack-hot-middleware/client.js?path=${config.compilerPublicPath}__webpack_hmr` : ''
-    ],
+    main: mainEntry,
     vendor: config.compilerVendors,
     normalize: [paths.client('normalize')]
   },
@@ -38,7 +38,7 @@ const webpackConfig = {
   devtool: config.compilerSourceMap,
   externals: {},
   module: {
-    noParse: /jquery|lodash/,
+    noParse: /jquery/,
     rules: []
   },
   plugins: [
@@ -62,307 +62,166 @@ webpackConfig.module.rules.push({
     loader: 'babel-loader',
     options: {
       cacheDirectory: true,
-      plugins: [
-        'lodash',
-        'babel-plugin-transform-class-properties',
-        'babel-plugin-syntax-dynamic-import',
-        [
-          'babel-plugin-transform-runtime',
-          {
-            helpers: true,
-            polyfill: false, // we polyfill needed features in src/normalize.js
-            regenerator: true,
-          },
-        ],
-        [
-          'babel-plugin-transform-object-rest-spread',
-          {
-            useBuiltIns: true // we polyfill Object.assign in src/normalize.js
-          },
-        ],
-        ["import", [{ "libraryName": "antd", "style": "css" }]]
-      ],
       presets: [
         'babel-preset-react',
         ['babel-preset-env', {
           modules: false,
           targets: {
-            ie9: true,
-          },
-          uglify: true,
+            browsers: 'last 2 versions',
+            uglify: true
+          }
         }]
+      ],
+      plugins: [
+        'lodash',
+        //'babel-plugin-syntax-dynamic-import',
+        'babel-plugin-transform-class-properties',
+        [
+          'babel-plugin-transform-runtime',
+          {
+            polyfill: false // only polyfill needed features in client/normalize.js
+          }
+        ],
+        [
+          'babel-plugin-transform-object-rest-spread',
+          {
+            useBuiltIns: true // polyfill Object.assign in client/normalize.js
+          }
+        ],
+        ['import', [{libraryName: 'antd', style: 'css'}]]
       ]
     }
   }]
 })
 
-// JSON
+// Images
 webpackConfig.module.rules.push({
-  test: /\.json$/,
-  loader: 'json'
+  test: /\.(jpe?g|png|gif)$/i,
+  loader: 'url-loader',
+  options: { limit: 8192 }
 })
 
-// File loaders
-webpackConfig.module.rules.push(
-  { test: /\.woff$/,  loader: 'url-loader', options: { name: 'fonts/[name].[ext]', limit: 10000, mimetype: 'application/font-woff' } },
-  { test: /\.woff2$/, loader: 'url-loader', options: { name: 'fonts/[name].[ext]', limit: 10000, mimetype: 'application/font-woff2' } },
-  { test: /\.otf$/,   loader: 'url-loader', options: { name: 'fonts/[name].[ext]', limit: 10000, mimetype: 'font/opentype' } },
-  { test: /\.ttf$/,   loader: 'url-loader', options: { name: 'fonts/[name].[ext]', limit: 10000, mimetype: 'application/octet-stream' } },
-  { test: /\.eot$/,   loader: 'url-loader', options: { name: 'fonts/[name].[ext]', limit: 10000, mimetype: 'application/vnd.ms-fontobject' } },
-  { test: /\.svg/,    loader: 'url-loader', options: { name: 'fonts/[name].[ext]', limit: 10000, mimetype: 'image/svg+xml' } },
-  { test: /\.(jpe?g|png|gif)$/i, loader: 'url-loader', options: { limit: 8192 } }
-)
+// Fonts
+;[
+  ['woff', 'application/font-woff'],
+  ['woff2', 'application/font-woff2'],
+  ['otf', 'font/opentype'],
+  ['ttf', 'application/octet-stream'],
+  ['eot', 'application/vnd.ms-fontobject'],
+  ['svg', 'image/svg+xml'],
+].forEach((font) => {
+  const extension = font[0]
+  const mimetype = font[1]
 
-// ------------------------------------
-// Style Loaders
-// ------------------------------------
-// If config has CSS modules enabled, treat this project's styles as CSS modules.
-const PATHS_TO_TREAT_AS_CSS_MODULES = []
-if (config.compilerCssModules) {
-  PATHS_TO_TREAT_AS_CSS_MODULES.push(
-    paths.client().replace(/[\^\$\.\*\+\-\?\=\!\:\|\\\/\(\)\[\]\{\}\,]/g, '\\$&') // eslint-disable-line
-  )
+  webpackConfig.module.rules.push({
+    test    : new RegExp(`\\.${extension}$`),
+    loader  : 'url-loader',
+    options : {
+      name  : 'fonts/[name].[ext]',
+      limit : 10000,
+      mimetype,
+    },
+  })
+})
+
+// Styles
+const cssLoader = {
+  loader: 'css-loader',
+  options: {
+    modules: config.compilerCssModules,
+    importLoaders: 1,
+    localIdentName: '[name]__[local]--[hash:base64:5]',
+    sourceMap: !!config.compilerSourceMap,
+    camelCase: 'dashes',
+    minimize: {
+      preset: ['default', {
+        autoprefixer: { browsers: ['last 2 versions'] },
+        discardComments: { removeAll : true },
+        discardUnused: false,
+        mergeIdents: false,
+        reduceIdents: false,
+        safe: true,
+        sourcemap: !!config.compilerSourceMap
+      }]
+    }
+  }
 }
-const isUsingCSSModules = !!PATHS_TO_TREAT_AS_CSS_MODULES.length
-const cssModulesRegex = new RegExp(`(${PATHS_TO_TREAT_AS_CSS_MODULES.join('|')})`)
 
-// Loaders for styles that need to be treated as CSS modules.
+// not used since css-loader already come with cssnano
+const postCssLoader = {
+  loader: 'postcss-loader',
+  options: {
+    sourceMap: !!config.compilerSourceMap,
+    ident: 'postcss',
+    plugins () {
+      return [
+        require('autoprefixer')({
+          add: true,
+          remove: true,
+          browsers: ['last 2 versions']
+        }),
+        require('cssnano')({
+          discardComments: {
+            removeAll: true
+          },
+          discardUnused: false,
+          mergeIdents: false,
+          reduceIdents: false,
+          safe: true,
+          sourcemap: true
+        })
+      ]
+    }
+  }
+}
+
+const sassLoader = {
+  loader: 'sass-loader',
+  options: {
+    sourceMap: !!config.compilerSourceMap,
+    includePaths: [
+      paths.client('styles'),
+    ]
+  }
+}
+
 const extractStyles = new ExtractTextPlugin({
   filename: '[name].[contenthash].css',
   allChunks: true,
-  disable: __DEV__,
+  disable: __DEV__
 })
 
-if (isUsingCSSModules) {
-  webpackConfig.module.rules.push({
-    test: /\.(sass|scss)$/,
-    //include: cssModulesRegex,
-    loader: extractStyles.extract({
-      fallback: 'style-loader',
-      use: [
-        {
-          loader: 'css-loader',
-          options: {
-            modules: true,
-            importLoaders: 1,
-            localIdentName: '[path][name]__[local]--[hash:base64:5]',
-            sourceMap: config.compilerSourceMap,
-            minimize: false && {
-              autoprefixer: {
-                add: true,
-                remove: true,
-                browsers: ['last 2 versions'],
-              },
-              discardComments: {
-                removeAll : true,
-              },
-              discardUnused: false,
-              mergeIdents: false,
-              reduceIdents: false,
-              safe: true,
-              sourcemap: config.compilerSourceMap,
-            },
-          },
-        },
-        {
-          loader: 'postcss-loader',
-          options: {
-            sourceMap: config.compilerSourceMap,
-            ident: 'postcss',
-            plugins () {
-              return [
-                require('autoprefixer')({
-                  add: true,
-                  remove: true,
-                  browsers: ['last 2 versions']
-                }),
-                require('cssnano')({
-                  discardComments: {
-                    removeAll: true
-                  },
-                  discardUnused: false,
-                  mergeIdents: false,
-                  reduceIdents: false,
-                  safe: true,
-                  sourcemap: true
-                })
-              ]
-            }
-          }
-
-        },
-        {
-          loader: 'sass-loader',
-          options: {
-            sourceMap: config.compilerSourceMap,
-            includePaths: [
-              paths.client('styles'),
-            ],
-          },
-        }
-      ]
-    })
-  })
-
-  webpackConfig.module.rules.push({
-    test: /\.css$/,
-    //include: cssModulesRegex,
-    loader: extractStyles.extract({
-      fallback: 'style-loader',
-      use: [
-        {
-          loader: 'css-loader',
-          options: {
-            modules: true,
-            importLoaders: 1,
-            localIdentName: '[path][name]__[local]--[hash:base64:5]',
-            sourceMap: config.compilerSourceMap,
-            minimize: false && {
-              autoprefixer: {
-                add: true,
-                remove: true,
-                browsers: ['last 2 versions'],
-              },
-              discardComments: {
-                removeAll : true,
-              },
-              discardUnused: false,
-              mergeIdents: false,
-              reduceIdents: false,
-              safe: true,
-              sourcemap: config.compilerSourceMap,
-            },
-          },
-        },
-        {
-          loader: 'postcss-loader',
-          options: {
-            sourceMap: config.compilerSourceMap,
-            ident: 'postcss',  // <= this line
-            plugins () {
-              return [
-                require('autoprefixer')({
-                  add: true,
-                  remove: true,
-                  browsers: ['last 2 versions']
-                }),
-                require('cssnano')({
-                  discardComments: {
-                    removeAll: true
-                  },
-                  discardUnused: false,
-                  mergeIdents: false,
-                  reduceIdents: false,
-                  safe: true,
-                  sourcemap: true
-                })
-              ]
-            }
-          }
-        }
-      ]
-    })
-  })
-}
-
-// Loaders for files that should not be treated as CSS modules.
-/*const excludeCSSModules = isUsingCSSModules ? cssModulesRegex : false
 webpackConfig.module.rules.push({
-  test: /\.scss$/,
-  exclude: excludeCSSModules,
+  test: /\.(sass|scss)$/,
   loader: extractStyles.extract({
     fallback: 'style-loader',
     use: [
-      {
-        loader: 'css-loader',
-        options: {
-          importLoaders: 1,
-          localIdentName: '[path][name]__[local]--[hash:base64:5]',
-          sourceMap: config.compiler_source_map,
-          minimize: false && {
-            autoprefixer: {
-              add: true,
-              remove: true,
-              browsers: ['last 2 versions'],
-            },
-            discardComments: {
-              removeAll : true,
-            },
-            discardUnused: false,
-            mergeIdents: false,
-            reduceIdents: false,
-            safe: true,
-            sourcemap: config.compiler_source_map,
-          },
-        },
-      },
-      {
-        loader: 'postcss-loader'
-      },
-      {
-        loader: 'sass-loader',
-        options: {
-          sourceMap: config.compiler_source_map,
-          includePaths: [
-            paths.client('styles'),
-          ],
-        },
-      }
+      cssLoader,
+      //postCssLoader,
+      sassLoader
     ]
   })
 })
+
 webpackConfig.module.rules.push({
   test: /\.css$/,
-  exclude: excludeCSSModules,
   loader: extractStyles.extract({
     fallback: 'style-loader',
     use: [
-      {
-        loader: 'css-loader',
-        options: {
-          modules: true,
-          importLoaders: 1,
-          localIdentName: '[path][name]__[local]--[hash:base64:5]',
-          sourceMap: config.compiler_source_map,
-          minimize: false && {
-            autoprefixer: {
-              add: true,
-              remove: true,
-              browsers: ['last 2 versions'],
-            },
-            discardComments: {
-              removeAll : true,
-            },
-            discardUnused: false,
-            mergeIdents: false,
-            reduceIdents: false,
-            safe: true,
-            sourcemap: config.compiler_source_map,
-          },
-        },
-      },
-      {
-        loader: 'postcss-loader'
-      }
+      cssLoader,
+      //postCssLoaderå
     ]
   })
-})*/
+})
 
 webpackConfig.plugins.push(extractStyles)
-/*webpackConfig.plugins.push(new webpack.LoaderOptionsPlugin({
-  options: {
-    postcss: [
-
-    ]
-  }
-}))*/
 
 // HTML Template
 webpackConfig.plugins.push(new HtmlWebpackPlugin({
   template: paths.client('index.html'),
   favicon: paths.client('static/favicon.ico'),
   hash: false,
-  inject: true,
+  inject: 'body',
   minify: {
     collapseWhitespace: true
   }
@@ -370,47 +229,21 @@ webpackConfig.plugins.push(new HtmlWebpackPlugin({
 
 // Development Tools
 if (__DEV__) {
-  debug('Enable plugins for live development (HMR, NoErrors).')
+  debug('Enable plugins for live development (HMR, NamedModulesPlugin).')
   webpackConfig.plugins.push(
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin()
   )
 }
 
-// Bundle Splitting
-if (!__TEST__) {
-  debug('Enable plugins for bundle split')
-  webpackConfig.plugins.push(
-    new webpack.optimize.CommonsChunkPlugin({
-      names: ['vendor', 'normalize', 'manifest']
-    })
-  )
-}
-
-// Ensure that the compiler exits on errors during testing so that
-// they do not get skipped and misreported.
-if (__TEST__ && !argv.watch) {
-  webpackConfig.plugins.push(function () {
-    this.plugin('done', function (stats) {
-      if (stats.compilation.errors.length) {
-        // Pretend no assets were generated. This prevents the tests
-        // from running making it clear that there were warnings.
-        throw new Error(
-          stats.compilation.errors.map(err => err.message || err)
-        )
-      }
-    })
-  })
-}
-
 // Production Optimizations
 if (__PROD__) {
+  debug('Enable plugins for production optimization.')
   webpackConfig.plugins.push(
     new webpack.LoaderOptionsPlugin({
       minimize: true,
       debug: false,
     }),
-    //new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: !!config.devtool,
       comments: false,
@@ -425,10 +258,33 @@ if (__PROD__) {
         evaluate: true,
         if_return: true,
         join_vars: true,
-      },
-    }),
-    //new webpack.optimize.AggressiveMergingPlugin()
+      }
+    })
   )
+}
+
+// Bundle Splitting
+if (!__TEST__) {
+  debug('Enable plugins for bundle split.')
+  webpackConfig.plugins.push(
+    new webpack.optimize.CommonsChunkPlugin({
+      names: ['vendor', 'normalize', 'manifest']
+    })
+  )
+}
+
+/* Ensure that the compiler exits on errors during testing so that
+they do not get skipped and misreported.*/
+if (__TEST__ && !argv.watch) {
+  webpackConfig.plugins.push(function () {
+    this.plugin('done', function (stats) {
+      if (stats.compilation.errors.length) {
+        throw new Error(
+          stats.compilation.errors.map(err => err.message || err)
+        )
+      }
+    })
+  })
 }
 
 module.exports = webpackConfig

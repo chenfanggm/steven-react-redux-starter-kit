@@ -3,7 +3,7 @@
   "env"     : {
     "mocha" : true
   },
-  "compilerGlobals": {
+  "globals": {
     "expect" : false,
     "should" : false,
     "sinon"  : false

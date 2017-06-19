@@ -1,7 +1,31 @@
 {
-  "presets": ["es2015", "react", "stage-0"],
+  "presets": [
+    "babel-preset-react",
+    ["babel-preset-env", {
+      "modules": "commonjs",
+      "targets": {
+        "browsers": "last 2 versions",
+        "node": "current",
+        "uglify": true
+      }
+    }]
+  ],
   "plugins": [
     "lodash",
-    ["import", [{ "libraryName": "antd", "style": "css" }]]
+    //"babel-plugin-syntax-dynamic-import",
+    "babel-plugin-transform-class-properties",
+    [
+      "babel-plugin-transform-runtime",
+      {
+        "polyfill": false // only polyfill needed features in client/normalize.js
+      }
+    ],
+    [
+      "babel-plugin-transform-object-rest-spread",
+      {
+        "useBuiltIns": true // polyfill Object.assign in client/normalize.js
+      }
+    ],
+    ["import", [{"libraryName": "antd", "style": "css"}]]
   ]
 }
