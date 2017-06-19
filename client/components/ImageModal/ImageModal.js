@@ -11,7 +11,7 @@ class ImageModal extends React.Component {
 
   componentDidUpdate() {
     const { visible } = this.props
-    if(visible) {
+    if (visible) {
       $('body').addClass('noScroll')
     } else {
       $('body').removeClass('noScroll')
@@ -25,15 +25,15 @@ class ImageModal extends React.Component {
       <Modal visible={visible}
              width={width}
              footer={false}
-             closable={true}
+             closable
              wrapClassName={classes.container}
              onCancel={onCancel}
-             style={{maxWidth: width, margin: '1rem auto'}}
+             style={{ maxWidth: width, margin: '1rem auto' }}
              zIndex={1010}
       >
         <div className={classes.modalBody}>
           <h4 className={classes.title}>{title}</h4>
-          <img src={wechatCodeImg} className={classes.wechatCode}/>
+          <img src={wechatCodeImg} className={classes.wechatCode} />
         </div>
       </Modal>
     )

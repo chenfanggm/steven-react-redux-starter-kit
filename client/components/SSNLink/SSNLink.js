@@ -15,18 +15,18 @@ class SSNLink extends React.Component {
   }
 
   showWechatCode() {
-    this.setState({isShowWechatCode: true})
+    this.setState({ isShowWechatCode: true })
   }
 
   closeWechatCode() {
-    this.setState({isShowWechatCode: false})
+    this.setState({ isShowWechatCode: false })
   }
 
   render() {
     const { isShowWechatCode } = this.state
 
     return (
-      <div className={ classes.container }>
+      <div className={classes.container}>
         <a href='https://github.com/chenfanggm' className={classes.link}>
           <i className='fa fa-github' aria-hidden='true'></i>
         </a>
@@ -34,7 +34,7 @@ class SSNLink extends React.Component {
           <i className='fa fa-linkedin-square' aria-hidden='true'></i>
         </a>
         <a className={classes.link} onClick={this.showWechatCode}>
-          <i className="fa fa-weixin" aria-hidden="true"></i>
+          <i className='fa fa-weixin' aria-hidden='true'></i>
         </a>
         <ImageModal
           visible={isShowWechatCode}

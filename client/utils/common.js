@@ -1,9 +1,9 @@
-/**
+/*************
  * Request
- */
-export const errorFilter = ({ withJsonFilter } = { withJsonFilter: true}) =>
+ *************/
+export const errorFilter = ({ withJsonFilter } = { withJsonFilter: true }) =>
   (response) => {
-    if(!response.ok) {
+    if (!response.ok) {
       throw response
     }
 
@@ -26,9 +26,9 @@ export const getQueryString = (queryParams) => {
   return searchString
 }
 
-/**
+/*************
  * Validation
- */
+ *************/
 export const isValidEmail = (email) => {
   const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
   return regex.test(email)

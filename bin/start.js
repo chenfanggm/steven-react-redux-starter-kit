@@ -1,7 +1,7 @@
 'use strict'
 
 const config = require('../config')
-const server = require('../server')
+const server = require('../server/server')
 const debug = require('debug')('app:bin:start')
 
 const port = config.serverPort

@@ -79,7 +79,7 @@ const isLoggedIn = (opts = { showLogin: false }) =>
       })
   }
 
-const loginUser = (email, password, rememberMe, redirect='/') =>
+const loginUser = (email, password, rememberMe, redirect = '/') =>
   (dispatch, getState) => {
     const authPayload = btoa(JSON.stringify({
       email: email,
@@ -108,11 +108,11 @@ const loginUser = (email, password, rememberMe, redirect='/') =>
       .catch((error) => {
         console.log(error)
         dispatch(authFailed(error))
-        message.error(`Failed to login user! Try again!`)
+        message.error('Failed to login user! Try again!')
       })
   }
 
-const registerUser = (email, password, redirect='/') =>
+const registerUser = (email, password, redirect = '/') =>
   (dispatch, getState) => {
 
     const authPayload = btoa(JSON.stringify({
@@ -145,7 +145,7 @@ const registerUser = (email, password, redirect='/') =>
         if (error.status && 409 === error.status) {
           return message.error(`Sorry! ${email} already exist!`)
         }
-        message.error(`Failed to register user! Try again!`)
+        message.error('Failed to register user! Try again!')
       })
   }
 
@@ -203,7 +203,7 @@ const updateUsername = (username) =>
         if (error.status && 409 === error.status) {
           return message.error(`Sorry! ${username} already exist!`)
         }
-        message.error(`Failed to save username! Try again!`)
+        message.error('Failed to save username! Try again!')
       })
   }
 
@@ -280,7 +280,7 @@ const ACTION_HANDLERS = {
       isLoading : false,
       isAuthenticated : true,
       error: {},
-      statusText : `Successfully logged in.`
+      statusText : 'Successfully logged in.'
     }
   },
   [AUTH_FAILED]: (state, { error }) => {

@@ -26,13 +26,13 @@ class AboutView extends React.Component {
           <section>
             <h3 className={classes.title}>Me</h3>
             <p className={classes.main}
-               dangerouslySetInnerHTML={{__html: converter.makeHtml(whoAmI)}}>
+               dangerouslySetInnerHTML={{ __html: converter.makeHtml(whoAmI) }}>
             </p>
           </section>
           <section>
             <h3 className={classes.title}>The Site</h3>
             <p className={classes.main}
-               dangerouslySetInnerHTML={{__html: converter.makeHtml(whatAboutTheSite)}}>
+               dangerouslySetInnerHTML={{ __html: converter.makeHtml(whatAboutTheSite) }}>
             </p>
           </section>
         </main>

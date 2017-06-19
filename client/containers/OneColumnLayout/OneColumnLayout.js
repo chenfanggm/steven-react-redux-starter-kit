@@ -19,8 +19,8 @@ class OneColumnLayout extends React.Component {
     message.config({ top: 70 })
     // stop bg scrolling on mobile when modal is opened
     $('body').on('touchmove', (e) => {
-      if($('.noScroll').has($(e.target)).length) e.preventDefault();
-    });
+      if ($('.noScroll').has($(e.target)).length) e.preventDefault()
+    })
     // check login status
     this.props.isLoggedIn()
   }

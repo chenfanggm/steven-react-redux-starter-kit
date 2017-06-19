@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import classes from './MainMenu.scss'
-import { Menu, Dropdown, Icon } from 'antd';
+import { Menu, Dropdown, Icon } from 'antd'
 import { actions as authActions } from '../../redux/modules/UserReducer'
 
 
@@ -32,8 +32,7 @@ class MainMenu extends React.Component {
           LOG OUT
         </a>
       </Menu.Item>
-    )
-      : (
+    ) : (
       <Menu.Item key='navbarAuth'>
         <a onClick={showLoginModal}>
           <i className='fa fa-pencil-square-o' aria-hidden='true'></i>&nbsp;

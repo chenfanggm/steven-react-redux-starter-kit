@@ -1,12 +1,12 @@
 import path from 'path'
-import config from './config/index'
+import config from '../config/index'
 import webpack from 'webpack'
-import webpackConfig from './build/webpack.config'
+import webpackConfig from '../build/webpack.config'
 import express from 'express'
 import compress from 'compression'
 import httpStatus from 'http-status'
-import errorHandler from './utils/express-middleware/errorHandler'
-import APIError from './utils/APIError'
+import errorHandler from './express-middleware/errorHandler'
+import APIError from './APIError'
 import _debug from 'debug'
 
 const debug = _debug('app:server')
@@ -14,7 +14,7 @@ const debug = _debug('app:server')
 /**
  * Middleware
  */
-debug("Init express app...")
+debug('Init express app...')
 const app = express()
 app.use(compress())
 
