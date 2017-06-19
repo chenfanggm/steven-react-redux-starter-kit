@@ -18,10 +18,6 @@ debug("Init express app...")
 const app = express()
 app.use(compress())
 
-// etag
-//app.use(convert(conditional()))
-//app.use(etag())
-
 // ------------------------------------
 // Apply Webpack HMR Middleware
 // ------------------------------------
