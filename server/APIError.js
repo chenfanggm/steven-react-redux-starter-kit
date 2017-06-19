@@ -1,6 +1,6 @@
-var httpStatus = require('http-status')
+const httpStatus = require('http-status')
 
-var ExtendableError = function (message, status, isPublic) {
+const ExtendableError = function (message, status, isPublic) {
   Error.call(this, message)
   this.name = this.constructor.name
   this.message = message
@@ -10,7 +10,7 @@ var ExtendableError = function (message, status, isPublic) {
   Error.captureStackTrace(this, this.constructor.name)
 }
 
-var APIError = function (message, status, isPublic) {
+const APIError = function (message, status, isPublic) {
   if (status === undefined) status = httpStatus.INTERNAL_SERVER_ERROR
   if (isPublic === undefined) isPublic = false
   ExtendableError.call(this, message, status, isPublic)
