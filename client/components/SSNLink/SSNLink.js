@@ -1,7 +1,5 @@
-import React, { PropTypes } from 'react'
-import { Modal } from 'antd'
+import React from 'react'
 import ImageModal from '../ImageModal'
-import wechatCodeImg from '../../static/img/me/wechat_code.jpg'
 import classes from './SSNLink.scss'
 
 

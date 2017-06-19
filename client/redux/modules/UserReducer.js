@@ -1,10 +1,6 @@
 import { routerActions } from 'react-router-redux'
-import cookie from 'react-cookie'
 import { message } from 'antd'
 import { errorFilter } from '../../utils/common'
-import { actions as globalActions } from './GlobalReducer'
-import { actions as messageActions } from './MessageReducer'
-import Constants from '../../utils/constants'
 import API from '../../utils/APIConstants'
 
 
@@ -175,12 +171,10 @@ const logoutUser = () =>
 
 const afterLoginAppInitActions = (dispatch) =>
   (dispatch, getState) => {
-    dispatch(messageActions.fetchMessages())
   }
 
 const afterLogoutAppClearActions = (dispatch) =>
   (dispatch, getState) => {
-    dispatch(messageActions.clearUnreadMessage())
     dispatch(routerActions.push('/'))
   }
 
@@ -203,7 +197,6 @@ const updateUsername = (username) =>
       .then(errorFilter())
       .then((user) => {
         dispatch(updateUser(user))
-        dispatch(globalActions.hideUsernameModal())
         message.success(`Welcome ${user.username}!`, 2.5)
       })
       .catch((error) => {

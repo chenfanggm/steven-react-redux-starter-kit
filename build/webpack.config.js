@@ -88,7 +88,7 @@ webpackConfig.module.rules.push({
             useBuiltIns: true // polyfill Object.assign in client/normalize.js
           }
         ],
-        ['import', [{libraryName: 'antd', style: 'css'}]]
+        ['import', [{ libraryName: 'antd', style: "css" }]]
       ]
     }
   }]
@@ -132,7 +132,6 @@ const cssLoader = {
     importLoaders: 1,
     localIdentName: '[name]__[local]--[hash:base64:5]',
     sourceMap: !!config.compilerSourceMap,
-    camelCase: 'dashes',
     minimize: {
       preset: ['default', {
         autoprefixer: { browsers: ['last 2 versions'] },

@@ -1,22 +1,12 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import classes from './MainMenu.scss'
 import { Menu, Dropdown, Icon } from 'antd';
-import { actions as globalActions } from '../../redux/modules/GlobalReducer'
 import { actions as authActions } from '../../redux/modules/UserReducer'
-import { actions as messageActions } from '../../redux/modules/MessageReducer'
-
 
 
 class MainMenu extends React.Component {
-
-  static propTypes = {
-    isAuthenticated: PropTypes.bool.isRequired,
-    showLoginModal: PropTypes.func.isRequired,
-    showMessageModal: PropTypes.func.isRequired,
-    logoutUser: PropTypes.func.isRequired
-  };
 
   constructor(props) {
     super(props)
@@ -99,4 +89,4 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(mapStateToProps,
-  Object.assign({}, authActions, messageActions, globalActions))(MainMenu)
+  Object.assign({}, authActions))(MainMenu)

@@ -26,6 +26,6 @@
         "useBuiltIns": true // polyfill Object.assign in client/normalize.js
       }
     ],
-    ["import", [{"libraryName": "antd", "style": "css"}]]
+    ["import", [{"libraryName": "antd", "style": "css" }]]
   ]
 }

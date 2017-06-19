@@ -1,27 +1,15 @@
 import '../../styles/main.scss'
-import React, { PropTypes } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { message } from 'antd'
 import classes from './OneColumnLayout.scss'
 import Navbar from '../../components/Navbar'
 import Toolbar from '../../components/Toolbar'
-import LoginModal from '../../containers/LoginModal'
-import RegisterModal from '../../containers/RegisterModal'
-import UsernameModal from '../../containers/UsernameModal'
-import MessageModal from '../../containers/MessageModal'
 import Footer from '../../components/Footer'
 import { actions as authActions } from '../../redux/modules/UserReducer'
 
 
 class OneColumnLayout extends React.Component {
-
-  static propTypes = {
-    children: PropTypes.element.isRequired,
-    location: PropTypes.object.isRequired,
-    routes: PropTypes.array.isRequired,
-    params: PropTypes.object.isRequired,
-    isLoading: PropTypes.bool.isRequired
-  };
 
   componentDidMount() {
     /**
@@ -54,10 +42,6 @@ class OneColumnLayout extends React.Component {
           <Footer />
         </div>
         <div className={classes.hiddenLayer}>
-          <LoginModal />
-          <RegisterModal />
-          <UsernameModal />
-          <MessageModal />
         </div>
       </div>
     )
