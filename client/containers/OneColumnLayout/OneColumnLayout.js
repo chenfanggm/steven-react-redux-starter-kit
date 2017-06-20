@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { message } from 'antd'
 import classes from './OneColumnLayout.scss'
 import Navbar from '../../components/Navbar'
-import Toolbar from '../../components/Toolbar'
 import Footer from '../../components/Footer'
 import { actions as authActions } from '../../redux/modules/UserReducer'
 
@@ -33,7 +32,6 @@ class OneColumnLayout extends React.Component {
       <div className={classes.container}>
         <Navbar />
         <div className={classes.page}>
-          <Toolbar location={location} routes={routes} params={params} />
           <main className={classes.main}>
             {children}
           </main>

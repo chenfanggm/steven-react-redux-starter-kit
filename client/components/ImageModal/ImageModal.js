@@ -1,13 +1,9 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
 import { Modal } from 'antd'
 import wechatCodeImg from '../../static/img/me/wechat_code.jpg'
 import classes from './ImageModal.scss'
 
 class ImageModal extends React.Component {
-
-  static propTypes = {
-    visible: PropTypes.bool.isRequired
-  };
 
   componentDidUpdate() {
     const { visible } = this.props
