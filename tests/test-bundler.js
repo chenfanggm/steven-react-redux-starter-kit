@@ -39,9 +39,3 @@ const changedTests =  allTests.filter(path => {
 })
 
 ;(changedTests.length ? changedTests : allTests).forEach(testsContext)
-
-// require all `src/**/*.js` except for `main.js` (for isparta coverage reporting)
-// if (__COVERAGE__) {
-//   const componentsContext = require.context('../src/', true, /^((?!main|reducers).)*\.js$/)
-//   componentsContext.keys().forEach(componentsContext)
-// }

@@ -27,8 +27,7 @@
     "test": "better-npm-run test",
     "test:dev": "npm run test -- --watch",
     "lint": "eslint client tests server",
-    "lint:fix": "npm run lint -- --fix",
-    "codecov": "cat coverage/*/lcov.info | codecov"
+    "lint:fix": "npm run lint -- --fix"
   },
   "betterScripts": {
     "dev": {
