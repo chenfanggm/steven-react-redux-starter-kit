@@ -243,6 +243,7 @@ if (__PROD__) {
       minimize: true,
       debug: false,
     }),
+    new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: !!config.devtool,
       comments: false,
