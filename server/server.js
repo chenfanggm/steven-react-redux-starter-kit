@@ -3,6 +3,8 @@ import config from '../config/index'
 import webpack from 'webpack'
 import webpackConfig from '../build/webpack.config'
 import express from 'express'
+import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
 import compress from 'compression'
 import httpStatus from 'http-status'
 import errorHandler from './express-middleware/errorHandler'
@@ -60,6 +62,10 @@ if (config.env === 'development') {
   }))
   debug('Server is running on PRODUCTION mode.')
 }
+
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // error transform
 app.use(function (err, req, res, next) {
