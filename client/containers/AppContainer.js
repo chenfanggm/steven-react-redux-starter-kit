@@ -1,14 +1,7 @@
 import React from 'react'
 import { browserHistory, Router } from 'react-router'
 import { Provider } from 'react-redux'
-import ReactGA from 'react-ga'
-
-ReactGA.initialize('UA-60711230-1')
-
-const logPageView = () => {
-  ReactGA.set({ page: window.location.pathname })
-  ReactGA.pageview(window.location.pathname)
-}
+import { reportPageView } from '../utils/analytics'
 
 class AppContainer extends React.Component {
 
@@ -21,7 +14,7 @@ class AppContainer extends React.Component {
 
     return (
       <Provider store={store}>
-        <Router onUpdate={logPageView} history={browserHistory} children={routes} />
+        <Router history={browserHistory} children={routes} onUpdate={reportPageView} />
       </Provider>
     )
   }

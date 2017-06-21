@@ -1,4 +1,3 @@
-
 const PREFIX = '/api/v1'
 
 const API = {

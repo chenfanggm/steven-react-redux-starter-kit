@@ -1,5 +1,5 @@
 import React from 'react'
-import classes from './AboutView.scss'
+import classes from './AboutPage.scss'
 import Showdown from 'showdown'
 
 

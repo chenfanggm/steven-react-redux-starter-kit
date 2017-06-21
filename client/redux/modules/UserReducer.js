@@ -51,8 +51,6 @@ const updateUser = (user) => ({
 
 const isLoggedIn = (opts = { showLogin: false }) =>
   (dispatch, getState) => {
-    const state = getState()
-    const currentPath = state.router.locationBeforeTransitions.pathname
     const isShowLogin = opts.showLogin
 
     fetch(API.USER_ISLOGGEDIN, {
@@ -66,15 +64,11 @@ const isLoggedIn = (opts = { showLogin: false }) =>
         dispatch(updateUser(user))
         dispatch(afterLoginAppInitActions())
         dispatch(authSuccess())
-        const originPath = state.router.locationBeforeTransitions.query.origin
-        if (originPath) {
-          dispatch(routerActions.push(`/${originPath}`))
-        }
       })
       .catch((error) => {
         dispatch(authFailed(error))
         if (isShowLogin) {
-          dispatch(routerActions.push(`/?origin=${currentPath}`))
+          dispatch(routerActions.push('/'))
         }
       })
   }

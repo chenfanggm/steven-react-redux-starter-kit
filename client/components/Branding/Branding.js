@@ -1,7 +1,8 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
 import { Link } from 'react-router'
 import headshotImg from '../../static/img/me/cartoon_headshot.png'
 import classes from './Branding.scss'
+
 
 const Branding = ({ title, subtitle }) => {
   return (
@@ -13,10 +14,6 @@ const Branding = ({ title, subtitle }) => {
       <img className={classes.logo} src={headshotImg} />
     </Link>
   )
-}
-
-Branding.propTypes = {
-  title: PropTypes.string.isRequired
 }
 
 export default Branding

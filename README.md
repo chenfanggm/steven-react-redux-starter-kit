@@ -19,9 +19,9 @@ npm run dev
 
 
 # Reference:
-* https://facebook.github.io/react/docs/getting-started.html
+* https://facebook.github.io/react/
 * http://redux.js.org
-* http://webpack.github.io/docs/what-is-webpack.html
+* https://webpack.js.org/concepts/
 * https://github.com/davezuko/react-redux-starter-kit
 
 # License

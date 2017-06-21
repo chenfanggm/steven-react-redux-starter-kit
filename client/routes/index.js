@@ -1,18 +1,14 @@
-// only need to import the modules necessary for initial render
 import OneColumnLayout from '../containers/OneColumnLayout'
-import AboutView from './AboutView'
+import AboutPage from './AboutPage'
 
 const createRoutes = (store) => ({
   path: '/',
   name: 'Home',
   component: OneColumnLayout,
-  indexRoute: AboutView(store),
+  indexRoute: AboutPage(store),
   childRoutes: [
     // redirect unknown routes to home
-    {
-      path: '*',
-      onEnter: (nextState, replace) => replace('/')
-    }
+    { path: '*', onEnter: (nextState, replace) => replace('/') }
   ]
 })
 
