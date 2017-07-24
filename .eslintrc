@@ -63,11 +63,8 @@
     "strict": [2, "never"],        // controls location of Use Strict Directives
 
     // Babel & React
-    "babel/generator-star-spacing": 1,
     "babel/new-cap": 0,
     "babel/object-shorthand": 0,
-    "babel/arrow-parens": 1,
-    "babel/no-await-in-loop": 1,
     "react/jsx-indent-props": 0,
     "react/jsx-uses-react": 2,
     "react/jsx-uses-vars": 2,
@@ -82,8 +79,9 @@
     "max-len": [2, 250, 2],                     // specify the maximum length of a line in your program (off by default)
     "object-curly-spacing": [2, "always"],      // specify 2 curly spacing
     //"space-infix-ops": 0,                     // require spaces around operators
-    "generator-star-spacing": 0,                // enforce the spacing around the * in generator functions (off by default)
-
+    "generator-star-spacing": 1,                // enforce the spacing around the * in generator functions (off by default)
+    "arrow-parens": 0,
+    "no-await-in-loop": 1,
 
     // Undefined
     "comma-dangle": 0,             // disallow trailing commas in object literals
