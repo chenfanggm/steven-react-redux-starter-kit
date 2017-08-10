@@ -1,6 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router'
-import headshotImg from '../../static/img/me/cartoon_headshot.png'
+import { Link } from 'react-router-dom'
+import headshotImg from '../../statics/img/me/cartoon_headshot.png'
 import classes from './Branding.scss'
 
 

@@ -1,4 +1,3 @@
-const path = require('path')
 const argv = require('yargs').argv
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -32,22 +31,18 @@ const webpackConfig = {
       paths.client(),
       'node_modules'
     ],
-    extensions: ['*', '.js', '.jsx', '.json'],
-    alias: {}
+    extensions: ['*', '.js', '.jsx', '.json']
+    // alias: {}
   },
   devtool: config.compilerSourceMap,
   externals: {},
   module: {
-    noParse: /jquery/,
+    // noParse: /jquery/,
     rules: []
   },
   plugins: [
     new webpack.DefinePlugin(config.compilerGlobals),
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery',
-      'window.jQuery': 'jquery'
-    })
+    // new webpack.ProvidePlugin({})
   ]
 }
 
@@ -146,34 +141,6 @@ const cssLoader = {
   }
 }
 
-// not used since css-loader already come with cssnano
-const postCssLoader = {
-  loader: 'postcss-loader',
-  options: {
-    sourceMap: !!config.compilerSourceMap,
-    ident: 'postcss',
-    plugins () {
-      return [
-        require('autoprefixer')({
-          add: true,
-          remove: true,
-          browsers: ['last 2 versions']
-        }),
-        require('cssnano')({
-          discardComments: {
-            removeAll: true
-          },
-          discardUnused: false,
-          mergeIdents: false,
-          reduceIdents: false,
-          safe: true,
-          sourcemap: true
-        })
-      ]
-    }
-  }
-}
-
 const sassLoader = {
   loader: 'sass-loader',
   options: {
@@ -196,7 +163,6 @@ webpackConfig.module.rules.push({
     fallback: 'style-loader',
     use: [
       cssLoader,
-      //postCssLoader,
       sassLoader
     ]
   })
@@ -206,10 +172,7 @@ webpackConfig.module.rules.push({
   test: /\.css$/,
   loader: extractStyles.extract({
     fallback: 'style-loader',
-    use: [
-      cssLoader,
-      //postCssLoaderå
-    ]
+    use: [cssLoader]
   })
 })
 
@@ -218,7 +181,7 @@ webpackConfig.plugins.push(extractStyles)
 // HTML Template
 webpackConfig.plugins.push(new HtmlWebpackPlugin({
   template: paths.client('index.html'),
-  favicon: paths.client('static/favicon.ico'),
+  favicon: paths.client('statics/favicon.ico'),
   hash: false,
   inject: 'body',
   minify: {

@@ -1,23 +1,28 @@
+import './normalize'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import createStore from './redux/createStore'
+import createHistory from 'history/createBrowserHistory'
+import { createRoutes } from './routes'
 import AppContainer from './containers/AppContainer'
 
-// ========================================================
-// Store Instantiation
-// ========================================================
-const initialState = window.___INITIAL_STATE__
-const store = createStore(initialState)
 
-// ========================================================
+// --------------------------------------
+// Store Instantiation
+// --------------------------------------
+const initialState = window.__INITIAL_STATE__
+const history = createHistory()
+const store = createStore(initialState, history)
+const routes = createRoutes(store)
+
+// --------------------------------------
 // Render Setup
-// ========================================================
+// --------------------------------------
 const MOUNT_NODE = document.getElementById('root')
 
 let render = () => {
-  const routes = require('./routes').default(store)
   ReactDOM.render(
-    <AppContainer store={store} routes={routes} />,
+    <AppContainer store={store} history={history} routes={routes} />,
     MOUNT_NODE
   )
 }
@@ -54,7 +59,7 @@ if (__DEV__) {
   }
 }
 
-// ========================================================
+// --------------------------------------
 // Go!
-// ========================================================
+// --------------------------------------
 render()

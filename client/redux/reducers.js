@@ -1,13 +1,13 @@
 import { combineReducers } from 'redux'
-import location from './modules/LocationReducer'
-import user from './modules/UserReducer'
+import { routerReducer } from 'react-router-redux'
+import userReducer from './modules/userReducer'
 
 export const makeRootReducer = (asyncReducers) =>
   (state, action) => {
     return combineReducers({
       // sync reducers here
-      location,
-      user,
+      routing: routerReducer,
+      user: userReducer,
       ...asyncReducers
     })(action.type === 'global/RESET_STATE' ? undefined : state, action)
   }

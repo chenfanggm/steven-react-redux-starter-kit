@@ -1,19 +1,18 @@
 import { applyMiddleware, compose, createStore as createReduxStore } from 'redux'
 import thunk from 'redux-thunk'
-import { browserHistory } from 'react-router'
 import makeRootReducer from './reducers'
-import { updateLocation } from './modules/LocationReducer'
+import { routerMiddleware } from 'react-router-redux'
 
 
-const createStore = (initialState = {}) => {
-  // ======================================================
+const createStore = (initialState = {}, history) => {
+  // --------------------------------------
   // Middleware Configuration
-  // ======================================================
-  const middleware = [thunk]
+  // --------------------------------------
+  const middleware = [thunk, routerMiddleware(history)]
 
-  // ======================================================
+  // --------------------------------------
   // Store Enhancers
-  // ======================================================
+  // --------------------------------------
   const enhancers = []
   let composeEnhancers = compose
   if (__DEV__) {
@@ -22,9 +21,9 @@ const createStore = (initialState = {}) => {
     }
   }
 
-  // ======================================================
+  // --------------------------------------
   // Store Instantiation and HMR Setup
-  // ======================================================
+  // --------------------------------------
   const store = createReduxStore(
     makeRootReducer(),
     initialState,
@@ -34,9 +33,6 @@ const createStore = (initialState = {}) => {
     )
   )
   store.asyncReducers = {}
-
-  // To unsubscribe, invoke `store.unsubscribeHistory()` anytime
-  store.unsubscribeHistory = browserHistory.listen(updateLocation(store))
 
   if (module.hot) {
     module.hot.accept('./reducers', () => {

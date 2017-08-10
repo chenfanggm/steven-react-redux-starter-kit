@@ -2,9 +2,9 @@ const path = require('path')
 const debug = require('debug')('app:config')
 
 debug('Init default application config.')
-// ========================================================
+// --------------------------------------
 // Default Configuration
-// ========================================================
+// --------------------------------------
 const config = {
   env: process.env.NODE_ENV || 'development',
 
@@ -14,7 +14,7 @@ const config = {
   baseDir: path.resolve(__dirname, '..'),
   clientDir: 'client',
   distDir: 'dist',
-  staticDir: 'client/static',
+  staticDir: 'client/statics',
   testDir: 'tests',
 
   // ----------------------------------
@@ -31,7 +31,7 @@ const config = {
   },
   log: {
     console: {
-      level: "debug",
+      level: 'debug',
       timestamp: true,
       colorize: true
     }
@@ -49,11 +49,10 @@ const config = {
   compilerVendors: [
     'react',
     'react-redux',
-    'react-router',
+    'react-router-dom',
     'react-router-redux',
     'redux',
-    'font-awesome-sass-loader',
-    'jquery'
+    'font-awesome-sass-loader'
   ],
 
   // ----------------------------------

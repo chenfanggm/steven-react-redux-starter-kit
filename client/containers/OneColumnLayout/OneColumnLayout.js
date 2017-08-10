@@ -1,24 +1,30 @@
 import '../../styles/main.scss'
 import React from 'react'
 import { connect } from 'react-redux'
-import { message } from 'antd'
+import { reportPageView } from '../../utils/analytics'
 import classes from './OneColumnLayout.scss'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
-import { actions as authActions } from '../../redux/modules/UserReducer'
+import { actions as authActions } from '../../redux/modules/userReducer'
 
 
 class OneColumnLayout extends React.Component {
+
+  componentWillMount() {
+    reportPageView()
+  }
+
+  componentWillUpdate() {
+    reportPageView()
+  }
 
   componentDidMount() {
     /**
      * init global scope behavior
      */
-    // config antd message {top}
-    message.config({ top: 70 })
     // stop bg scrolling on mobile when modal is opened
-    $('body').on('touchmove', (e) => {
-      if ($('.noScroll').has($(e.target)).length) e.preventDefault()
+    document.getElementsByTagName('body')[0].addEventListener('touchmove', (e) => {
+      if (document.getElementsByClassName('.noScroll')[0].has(document.getElementsByClassName(e.target)).length) e.preventDefault()
     })
     // check login status
     this.props.isLoggedIn()
@@ -26,7 +32,6 @@ class OneColumnLayout extends React.Component {
 
   render() {
     const { children } = this.props
-    const { location, routes, params } = this.props
 
     return (
       <div className={classes.container}>

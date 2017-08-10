@@ -1,20 +1,22 @@
 import React from 'react'
-import { browserHistory, Router } from 'react-router'
 import { Provider } from 'react-redux'
-import { reportPageView } from '../utils/analytics'
+// import { Router } from 'react-router-dom'
+import { ConnectedRouter } from 'react-router-redux'
+
 
 class AppContainer extends React.Component {
 
-  shouldComponentUpdate () {
+  shouldComponentUpdate() {
     return false
   }
 
-  render () {
-    const { routes, store } = this.props
+  render() {
+    const { store, history, routes } = this.props
 
     return (
       <Provider store={store}>
-        <Router history={browserHistory} children={routes} onUpdate={reportPageView} />
+        <ConnectedRouter history={history}
+                         children={routes} />
       </Provider>
     )
   }

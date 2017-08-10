@@ -1,11 +1,10 @@
 import path from 'path'
-import config from '../config/index'
+import config from '../config'
 import webpack from 'webpack'
 import webpackConfig from '../build/webpack.config'
 import express from 'express'
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
-import compress from 'compression'
 import httpStatus from 'http-status'
 import errorHandler from './express-middleware/errorHandler'
 import APIError from './APIError'
@@ -13,16 +12,12 @@ import _debug from 'debug'
 
 const debug = _debug('app:server')
 
-/**
- * Middleware
- */
 debug('Init express app...')
 const app = express()
-app.use(compress())
-
 // ------------------------------------
 // Apply Webpack HMR Middleware
 // ------------------------------------
+
 if (config.env === 'development') {
   const compiler = webpack(webpackConfig)
 

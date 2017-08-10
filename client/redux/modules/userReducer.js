@@ -1,7 +1,6 @@
 import { routerActions } from 'react-router-redux'
-import { message } from 'antd'
 import { errorFilter } from '../../utils/common'
-import API from '../../utils/APIConstants'
+import API from '../../utils/apiConstants'
 
 
 // ------------------------------------
@@ -97,12 +96,10 @@ const loginUser = (email, password, rememberMe, redirect = '/') =>
         dispatch(afterLoginAppInitActions())
         dispatch(globalActions.hideLoginModal())
         dispatch(authSuccess())
-        message.success('Login Successfully')
       })
       .catch((error) => {
         console.log(error)
         dispatch(authFailed(error))
-        message.error('Failed to login user! Try again!')
       })
   }
 

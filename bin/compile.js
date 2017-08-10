@@ -41,8 +41,8 @@ const compile = () => {
   return Promise.resolve()
     .then(() => webpackCompiler(webpackConfig))
     .then(stats => {
-      debug('Copying static assets from ./client/static to dist folder.')
-      fs.copySync(paths.client('static'), paths.dist())
+      debug('Copying static assets from ./client/statics to dist folder.')
+      fs.copySync(paths.client('statics'), paths.dist())
       return stats
     })
     .then((stats) => {
