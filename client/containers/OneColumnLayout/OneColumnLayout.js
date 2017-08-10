@@ -19,12 +19,10 @@ class OneColumnLayout extends React.Component {
   }
 
   componentDidMount() {
-    /**
-     * init global scope behavior
-     */
     // stop bg scrolling on mobile when modal is opened
     document.getElementsByTagName('body')[0].addEventListener('touchmove', (e) => {
-      if (document.getElementsByClassName('.noScroll')[0].has(document.getElementsByClassName(e.target)).length) e.preventDefault()
+      if (document.getElementsByClassName('.noScroll')[0].has(document.getElementsByClassName(e.target)).length)
+        e.preventDefault()
     })
     // check login status
     this.props.isLoggedIn()
