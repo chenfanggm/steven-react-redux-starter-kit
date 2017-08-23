@@ -11,20 +11,14 @@
     }]
   ],
   "plugins": [
-    "lodash",
+    ["lodash", { "id": ["lodash", "semantic-ui-react"] }],
     //"babel-plugin-syntax-dynamic-import",
     "babel-plugin-transform-class-properties",
-    [
-      "babel-plugin-transform-runtime",
-      {
-        "polyfill": false // only polyfill needed features in client/normalize.js
-      }
-    ],
-    [
-      "babel-plugin-transform-object-rest-spread",
-      {
-        "useBuiltIns": true // polyfill Object.assign in client/normalize.js
-      }
-    ]
+    ["babel-plugin-transform-runtime", {
+      "polyfill": false // only polyfill needed features in client/normalize.js
+    }],
+    ["babel-plugin-transform-object-rest-spread", {
+      "useBuiltIns": true // polyfill Object.assign in client/normalize.js
+    }]
   ]
 }

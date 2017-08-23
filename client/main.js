@@ -35,8 +35,7 @@ if (__DEV__) {
       const RedBox = require('redbox-react').default
       ReactDOM.render(
         <RedBox error={error} />,
-        MOUNT_NODE
-      )
+        MOUNT_NODE)
     }
 
     // Wrap render in try/catch

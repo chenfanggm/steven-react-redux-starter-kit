@@ -42,7 +42,7 @@ const config = {
   // ----------------------------------
   compilerPublicPath: '/',
   compilerHashType: 'hash',
-  compilerCssModules: true,
+  compilerCssModules: false,
   compilerSourceMap:  'source-map',
   compilerFailOnWarning: false,
   compilerQuiet: false,
