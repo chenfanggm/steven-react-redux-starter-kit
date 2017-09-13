@@ -16,6 +16,7 @@ if (__DEV__) {
   mainEntry.push(`webpack-hot-middleware/client.js?path=${config.compilerPublicPath}__webpack_hmr&reload=true`)
 }
 const webpackConfig = {
+  devtool: config.compilerSourceMap,
   entry: {
     main: mainEntry,
     vendor: config.compilerVendors,
@@ -23,7 +24,7 @@ const webpackConfig = {
   },
   output: {
     path: paths.dist(),
-    filename: __DEV__ ? `[name].bundle.js` : `[name].[${config.compilerHashType}].bundle.js`,
+    filename: __DEV__ ? '[name].bundle.js' : `[name].[${config.compilerHashType}].bundle.js`,
     publicPath: config.compilerPublicPath
   },
   resolve: {
@@ -34,7 +35,6 @@ const webpackConfig = {
     extensions: ['*', '.js', '.jsx', '.json']
     // alias: {}
   },
-  devtool: config.compilerSourceMap,
   externals: {},
   module: {
     // noParse: /jquery/,
