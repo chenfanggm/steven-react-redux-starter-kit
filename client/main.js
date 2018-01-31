@@ -4,8 +4,8 @@ import ReactDOM from 'react-dom'
 import createStore from './redux/createStore'
 import createHistory from 'history/createBrowserHistory'
 import { createRoutes } from './routes'
-import App from './containers/App'
 import { AppContainer } from 'react-hot-loader'
+import App from './containers/App'
 
 
 // --------------------------------------
@@ -24,7 +24,9 @@ const MOUNT_NODE = document.getElementById('root')
 let render = () => {
   ReactDOM.render(
     (<AppContainer>
-      <App store={store} history={history} routes={routes} />
+      <App store={store}
+           history={history}
+           routes={routes} />
     </AppContainer>),
     MOUNT_NODE
   )

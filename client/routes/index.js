@@ -4,7 +4,7 @@ import OneColumnLayout from '../containers/OneColumnLayout'
 import AboutPage from './AboutPage'
 
 
-export const createRoutes = (store) => (
+export const createRoutes = () => (
   <OneColumnLayout>
     <Switch>
       <Route exact path='/' component={AboutPage} />
