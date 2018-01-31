@@ -11,10 +11,12 @@ const __PROD__ = config.compilerGlobals.__PROD__
 const __TEST__ = config.compilerGlobals.__TEST__
 
 debug('Init webpack config.')
-const mainEntry = [paths.client('main')]
+const mainEntry = []
 if (__DEV__) {
+  mainEntry.push('react-hot-loader/patch')
   mainEntry.push(`webpack-hot-middleware/client.js?path=${config.compilerPublicPath}__webpack_hmr&reload=true`)
 }
+mainEntry.push(paths.client('main'))
 const webpackConfig = {
   devtool: config.compilerSourceMap,
   entry: {
@@ -186,8 +188,8 @@ webpackConfig.plugins.push(new HtmlWebpackPlugin({
 if (__DEV__) {
   debug('Enable plugins for live development (HMR, NamedModulesPlugin).')
   webpackConfig.plugins.push(
+    new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NamedModulesPlugin()
   )
 }
 
