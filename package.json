@@ -48,33 +48,33 @@
       }
     },
     "forever": {
-      "command": "forever start -c node_modules/.bin/babel-node bin/start",
+      "command": "forever start -c node bin/start",
       "env": {
         "NODE_ENV": "production"
       }
     },
     "compile": {
-      "command": "babel-node bin/compile",
+      "command": "node bin/compile",
       "env": {
         "DEBUG": "app:*"
       }
     },
-    "deploy:dev": {
-      "command": "npm run deploy",
-      "env": {
-        "NODE_ENV": "development",
-        "DEBUG": "app:*"
-      }
-    },
-    "deploy:prod": {
-      "command": "npm run deploy",
+    "deploy": {
+      "command": "npm run compile",
       "env": {
         "NODE_ENV": "production",
         "DEBUG": "app:*"
       }
     },
+    "deploy:dev": {
+      "command": "npm run compile",
+      "env": {
+        "NODE_ENV": "development",
+        "DEBUG": "app:*"
+      }
+    },
     "test": {
-      "command": "babel-node ./node_modules/karma/bin/karma start build/karma.config",
+      "command": "node ./node_modules/karma/bin/karma start build/karma.config",
       "env": {
         "NODE_ENV": "test",
         "DEBUG": "app:*"
