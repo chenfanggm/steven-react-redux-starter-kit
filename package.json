@@ -34,14 +34,14 @@
   },
   "betterScripts": {
     "dev": {
-      "command": "nodemon --exec babel-node bin/start",
+      "command": "nodemon bin/start",
       "env": {
         "NODE_ENV": "development",
         "DEBUG": "app:*"
       }
     },
     "start": {
-      "command": "babel-node bin/start",
+      "command": "node bin/start",
       "env": {
         "NODE_ENV": "production",
         "DEBUG": "app:*"
